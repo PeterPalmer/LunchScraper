@@ -1,0 +1,10 @@
+[Bb]in
+[Oo]bj
+PublishScripts
+PublishProfiles
+packages
+TestResults
+*.suo
+*.user
+*.pubxml
+*.pubxml.user

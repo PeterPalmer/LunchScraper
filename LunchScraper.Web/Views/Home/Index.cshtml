@@ -1,0 +1,32 @@
+﻿@model LunchScraper.Models.MenusModel
+@{
+	ViewBag.Title = Model.Today;
+}
+
+<header>
+	@if (Model.ShowPrevioustDayLink)
+	{
+		<nav class="yesterday whiteFat"><a rel="prev" href="#">&laquo; @Model.Yesterday</a></nav>
+	}
+	@if (Model.ShowNextDayLink)
+	{
+		<nav class="tomorrow whiteFat"><a rel="next" href="#">@Model.Tomorrow &raquo;</a></nav>
+	}
+	<h1 class="whiteFat"><img src="@Url.Content("~/Content/KnifeFork.png")" />@Model.Today</h1>
+</header>
+
+<div class="body-content">
+
+	@foreach (var lunchMenu in Model.LunchMenus)
+	{
+		<div class="menu">
+			<a href="@lunchMenu.Webpage" title="@lunchMenu.Webpage">@lunchMenu.Restaurant</a>
+			<ul>
+				@foreach (var dish in lunchMenu.Dishes.Where(d => d.Date == Model.Date))
+				{
+					<li><span class="dish">@dish.Description</span></li>
+				}
+			</ul>
+		</div>
+	}
+</div>

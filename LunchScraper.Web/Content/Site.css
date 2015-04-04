@@ -1,0 +1,173 @@
+﻿html, body, div, span, h1, h2, h3, p, blockquote, pre,
+a, abbr, small, strike, strong, b, u, i, center, dl,
+dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+aside, footer, header, menu, nav, section, summary {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+}
+
+body {
+	line-height: 1;
+	height: 100%;
+	padding-top: 0;
+	padding-bottom: 20px;
+	margin: 0;
+	font-family: Helvetica,Helvetica Neue,Arial;
+	color: #666;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+ol, ul {
+	list-style: circle;
+	color: #36F;
+}
+
+li {
+	margin: 0.5em 0;
+}
+
+.body-content a, .body-content a:visited, .body-content a:active {
+	color: #36F;
+	font: 1.1em 'verdana', 'Helvetica', Arial;
+	text-decoration: none;
+}
+
+.body-content a:hover {
+	text-decoration: underline;
+}
+
+.body-content {
+	width: 75%;
+	margin: 0 auto;
+	font-size: 1.05em;
+}
+
+.dish {
+	color: #666;
+}
+
+.whiteFat {
+	font-family: 'Segoe UI', 'Arial Black', 'Arial Bold', Gadget, sans-serif;
+	color: white;
+	-webkit-text-shadow: 3px 3px 0 #00A, -1px -1px 0 #00A, 1px -1px 0 #00A, -1px 1px 0 #00A, 1px 1px 0 #00A;
+	-ms-text-shadow: 3px 3px 0 #00A, -1px -1px 0 #00A, 1px -1px 0 #00A, -1px 1px 0 #00A, 1px 1px 0 #00A;
+	text-shadow: 3px 3px 0 #00A, -1px -1px 0 #00A, 1px -1px 0 #00A, -1px 1px 0 #00A, 1px 1px 0 #00A;
+	font-weight: 900;
+}
+
+h1 {
+	font-size: 2em;
+	height: 1.5em;
+}
+
+h1 img {
+	height: 1.5em;
+	margin-bottom: -10px;
+	margin-left: -1em;
+	margin-right: 0.3em;
+}
+
+
+.yesterday {
+	float: left;
+}
+
+.tomorrow {
+	float: right;
+}
+
+.yesterday, .tomorrow {
+	margin-top: 1.5em;
+}
+
+header a {
+	font-size: 1.4em;
+	color: white;
+	text-decoration: none;
+}
+
+header a:hover {
+	color: #BBDDFF;
+	text-shadow: 5px 5px 0 #00A, -1px -1px 0 #00A, 1px -1px 0 #00A, -1px 1px 0 #00A, 1px 1px 0 #00A;
+}
+
+header {
+	background-color: cornflowerblue;
+	text-align: center;
+	margin-bottom: 2.5%;
+	padding: 1%;
+	color: white;
+}
+
+.menu {
+	padding-bottom: 2%;
+}
+
+footer {
+	position: absolute;
+	bottom: 20px;
+	clear: both;
+}
+
+@media (max-width: 750px) {
+	.body-content {
+		width: 85%;
+		font-size: 0.95em;
+	}
+
+	h1 {
+		font-size: 1.75em;
+		height: auto;
+	}
+
+	h1 img {
+		height: 35px;
+		margin-bottom: -6px;
+	}
+
+	.yesterday, .tomorrow {
+		margin-top: 0.6em;
+	}
+
+	.yesterday a, .tomorrow a {
+		font-size: 1.2em;
+	}
+}
+
+@media (max-width: 600px) {
+	.body-content {
+		margin: 0 10px 0 25px;
+		width: auto;
+		font-size: 0.9em;
+	}
+
+	h1 {
+		font-size: 1.5em;
+		height: auto;
+	}
+
+		h1 img {
+			display: none;
+		}
+
+	.yesterday, .tomorrow {
+		margin-top: 0.5%;
+	}
+
+		.yesterday a, .tomorrow a {
+			font-size: 1.1em;
+		}
+}
+
+@media (max-width: 350px) {
+	.yesterday, .tomorrow {
+		display: none;
+	}
+}
