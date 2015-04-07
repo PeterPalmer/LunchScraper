@@ -2,9 +2,9 @@
 
 namespace LunchScraper.Core.MenuReaders
 {
-	public class LansrattenReaderBase : SabisReaderBase
+	public class LansrattenReader : SabisReaderBase
 	{
-		public LansrattenReaderBase(IWebScraper scraper)
+		public LansrattenReader(IWebScraper scraper)
 			: base(scraper, "Länsrätten")
 		{
 		}

@@ -1,5 +1,4 @@
-﻿using System;
-using LunchScraper.Core.Domain;
+﻿using System.Linq;
 using LunchScraper.Core.MenuReaders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,19 +13,20 @@ namespace LunchScraper.Core.Tests.MenuReaders
 		{
 			// Arrange
 			var scraper = TestHelper.MockWebScraper(@"TestInput\LänsrättenV14.htm");
-			var menuReader = new LansrattenReaderBase(scraper);
+			var menuReader = new LansrattenReader(scraper);
 
 			// Act
 			var menu = menuReader.ReadWeeklyMenu();
 
 			// Assert
 			Assert.AreEqual(13, menu.Dishes.Count);
-			CollectionAssert.Contains(menu.Dishes, new Dish("Röd curry på kalv med limeblad och kokosmjölk", new DateTime(2015, 3, 30)));
-			CollectionAssert.Contains(menu.Dishes, new Dish("Pocherad miljöklassad torsk med ägg- & persiljesås samt gröna ärtor", new DateTime(2015, 3, 30)));
-			CollectionAssert.Contains(menu.Dishes, new Dish("Lins- & sötpotatisvindaloo med husets mango chutney", new DateTime(2015, 3, 30)));
-			CollectionAssert.Contains(menu.Dishes, new Dish("Thai fishcakes med sesamfrästa grönsaker och soyadipp", new DateTime(2015, 4, 1)));
-			CollectionAssert.Contains(menu.Dishes, new Dish("Ekologisk ärtsoppa med svenskt fläsk samt pannkaka med Länsrättens bärsylt", new DateTime(2015, 4, 2)));
-			CollectionAssert.Contains(menu.Dishes, new Dish("GLAD PÅSK ÖNSKAR PERSONALEN PÅ LÄNSRÄTTEN", new DateTime(2015, 4, 3)));
+
+			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "Röd curry på kalv med limeblad och kokosmjölk"));
+			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "Pocherad miljöklassad torsk med ägg- & persiljesås samt gröna ärtor"));
+			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "Lins- & sötpotatisvindaloo med husets mango chutney"));
+			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "Thai fishcakes med sesamfrästa grönsaker och soyadipp"));
+			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "Ekologisk ärtsoppa med svenskt fläsk samt pannkaka med Länsrättens bärsylt"));
+			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "GLAD PÅSK ÖNSKAR PERSONALEN PÅ LÄNSRÄTTEN"));
 		}
 	}
 }

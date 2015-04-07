@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using LunchScraper.Core.Domain;
 using LunchScraper.Core.MenuReaders;
@@ -11,15 +12,48 @@ namespace LunchScraper.Controllers
 	{
 		public ActionResult Index()
 		{
+			MenusModel model = GetModelFromSession();
+
+			if (model == null)
+			{
+				model = ScrapeMenus();
+			}
+
+			return View(model);
+		}
+
+		private MenusModel GetModelFromSession()
+		{
+			var sessionObject = System.Web.HttpContext.Current.Application["Model"];
+
+			if (!(sessionObject is MenusModel))
+			{
+				return null;
+			}
+
+			var model = (MenusModel)sessionObject;
+
+			if (DateTime.Now - model.CreatedAt > new TimeSpan(0, 30, 0))
+			{
+				return null;
+			}
+
+			return model;
+		}
+
+		private static MenusModel ScrapeMenus()
+		{
 			var model = new MenusModel();
-			model.Date = DateHelper.ThursdayThisWeek();
 
 			var scraper = new WebScraper();
 
-			var menuReaders = new List<IMenuReader>();
-			menuReaders.Add(new LansrattenReaderBase(scraper));
-			menuReaders.Add(new EuropaReader(scraper));
-			menuReaders.Add(new TennishallenReader(scraper));
+			var menuReaders = new List<IMenuReader>
+			{
+				new LansrattenReader(scraper),
+				new EuropaReader(scraper),
+				new TegeluddenReader(scraper),
+				new TennishallenReader(scraper)
+			};
 
 			var lunchMenus = new List<LunchMenu>();
 
@@ -31,21 +65,11 @@ namespace LunchScraper.Controllers
 
 			model.LunchMenus = lunchMenus;
 
-			return View(model);
-		}
+			System.Web.HttpContext.Current.Application.Lock();
+			System.Web.HttpContext.Current.Application["Model"] = model;
+			System.Web.HttpContext.Current.Application.UnLock();
 
-		public ActionResult About()
-		{
-			ViewBag.Message = "Your application description page.";
-
-			return View();
-		}
-
-		public ActionResult Contact()
-		{
-			ViewBag.Message = "Your contact page.";
-
-			return View();
+			return model;
 		}
 	}
 }

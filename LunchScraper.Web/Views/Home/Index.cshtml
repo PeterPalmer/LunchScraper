@@ -1,32 +1,47 @@
 ﻿@model LunchScraper.Models.MenusModel
 @{
-	ViewBag.Title = Model.Today;
+	ViewBag.Title = "Lunchskraparen";
 }
 
-<header>
-	@if (Model.ShowPrevioustDayLink)
-	{
-		<nav class="yesterday whiteFat"><a rel="prev" href="#">&laquo; @Model.Yesterday</a></nav>
-	}
-	@if (Model.ShowNextDayLink)
-	{
-		<nav class="tomorrow whiteFat"><a rel="next" href="#">@Model.Tomorrow &raquo;</a></nav>
-	}
-	<h1 class="whiteFat"><img src="@Url.Content("~/Content/KnifeFork.png")" />@Model.Today</h1>
-</header>
+@foreach (var day in Model.Days)
+{
+	string displayStyle = day.IsVisible ? "block" : "none";
+	int previousId = day.Id - 1;
+	int nextId = day.Id + 1;
 
-<div class="body-content">
+	<header id="@String.Format("header{0}", day.Id)" style="display: @displayStyle">
+		@if (day.ShowPrevioustDayLink)
+		{
+			<nav class="yesterday whiteFat"><a rel="prev" href="#" onclick='ShowDay(@previousId); return false;'>&laquo; @day.Yesterday</a></nav>
+		}
+		else
+		{
+			<div class="yesterday placeHolder"></div>
+		}
+		@if (day.ShowNextDayLink)
+		{
+			<nav class="tomorrow whiteFat"><a rel="next" href="#" onclick='ShowDay(@nextId); return false;'>@day.Tomorrow &raquo;</a></nav>
+		}
+		else
+		{
+			<div class="tomorrow placeHolder"></div>
+		}
+		<h1><span class="logo"></span><span class="whiteFat">@day.Today</span></h1>
+	</header>
 
-	@foreach (var lunchMenu in Model.LunchMenus)
-	{
-		<div class="menu">
-			<a href="@lunchMenu.Webpage" title="@lunchMenu.Webpage">@lunchMenu.Restaurant</a>
-			<ul>
-				@foreach (var dish in lunchMenu.Dishes.Where(d => d.Date == Model.Date))
-				{
-					<li><span class="dish">@dish.Description</span></li>
-				}
-			</ul>
-		</div>
-	}
-</div>
+	<div class="body-content" id="@String.Format("body{0}", day.Id)" style="display: @displayStyle">
+
+		@foreach (var lunchMenu in Model.LunchMenus)
+		{
+			<div class="menu">
+				<a href="@lunchMenu.Webpage" title="@lunchMenu.Webpage">@lunchMenu.Restaurant</a>
+				<ul>
+					@foreach (var dish in lunchMenu.Dishes.Where(d => d.Date == day.Date))
+					{
+						<li><span class="dish">@dish.Description</span></li>
+					}
+				</ul>
+			</div>
+		}
+	</div>
+}

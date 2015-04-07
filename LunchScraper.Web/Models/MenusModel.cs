@@ -9,50 +9,20 @@ namespace LunchScraper.Models
 	{
 		public MenusModel()
 		{
-			this.Date = DateTime.Today;
+			Days = new List<DayModel>
+			{
+				new DayModel(DateHelper.MondayThisWeek()),
+				new DayModel(DateHelper.TuesdayThisWeek()),
+				new DayModel(DateHelper.WednesdayThisWeek()),
+				new DayModel(DateHelper.ThursdayThisWeek()),
+				new DayModel(DateHelper.FridayThisWeek())
+			};
+
+			CreatedAt = DateTime.Now;
 		}
 
+		public DateTime CreatedAt { get; set; }
 		public IEnumerable<LunchMenu> LunchMenus { get; set; }
-		public DateTime Date { get; set; }
-
-		public String Today
-		{
-			get
-			{
-				return DateHelper.VeckodagPåSvenska(Date.DayOfWeek);
-			}
-		}
-
-		public String Yesterday
-		{
-			get
-			{
-				return DateHelper.VeckodagPåSvenska(Date.DayOfWeek - 1);
-			}
-		}
-
-		public String Tomorrow
-		{
-			get
-			{
-				return DateHelper.VeckodagPåSvenska(Date.DayOfWeek + 1);
-			}
-		}
-
-		public bool ShowNextDayLink
-		{
-			get
-			{
-				return this.Date.DayOfWeek < DayOfWeek.Friday;
-			}
-		}
-
-		public bool ShowPrevioustDayLink
-		{
-			get
-			{
-				return this.Date.DayOfWeek > DayOfWeek.Monday;
-			}
-		}
+		public List<DayModel> Days { get; private set; }
 	}
 }

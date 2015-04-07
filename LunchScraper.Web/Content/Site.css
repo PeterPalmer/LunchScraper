@@ -1,12 +1,12 @@
-﻿html, body, div, span, h1, h2, h3, p, blockquote, pre,
-a, abbr, small, strike, strong, b, u, i, center, dl,
-dt, dd, ol, ul, li, fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-aside, footer, header, menu, nav, section, summary {
+﻿* {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	vertical-align: baseline;
+}
+
+html {
+	padding-bottom: 80px;
 }
 
 body {
@@ -39,14 +39,18 @@ li {
 	text-decoration: none;
 }
 
-.body-content a:hover {
-	text-decoration: underline;
-}
+	.body-content a:hover {
+		text-decoration: underline;
+	}
 
 .body-content {
 	width: 75%;
 	margin: 0 auto;
 	font-size: 1.05em;
+}
+
+.placeHolder {
+	width: 100px;
 }
 
 .dish {
@@ -60,6 +64,21 @@ li {
 	-ms-text-shadow: 3px 3px 0 #00A, -1px -1px 0 #00A, 1px -1px 0 #00A, -1px 1px 0 #00A, 1px 1px 0 #00A;
 	text-shadow: 3px 3px 0 #00A, -1px -1px 0 #00A, 1px -1px 0 #00A, -1px 1px 0 #00A, 1px 1px 0 #00A;
 	font-weight: 900;
+	filter: glow(color=#0000aa, strength=1);
+	display: inline-block;
+	vertical-align: bottom;
+	padding-bottom: 0.3%;
+}
+
+.logo {
+	background: url(KnifeFork.png) left no-repeat;
+	-ms-background-size: 50px 50px;
+	background-size: cover;
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 0.3em;
 }
 
 h1 {
@@ -74,7 +93,6 @@ h1 img {
 	margin-right: 0.3em;
 }
 
-
 .yesterday {
 	float: left;
 }
@@ -85,6 +103,7 @@ h1 img {
 
 .yesterday, .tomorrow {
 	margin-top: 1.5em;
+	padding: 4px;
 }
 
 header a {
@@ -111,8 +130,6 @@ header {
 }
 
 footer {
-	position: absolute;
-	bottom: 20px;
 	clear: both;
 }
 
@@ -127,13 +144,18 @@ footer {
 		height: auto;
 	}
 
+	.logo {
+		width: 40px;
+		height: 40px;
+	}
+
 	h1 img {
 		height: 35px;
 		margin-bottom: -6px;
 	}
 
 	.yesterday, .tomorrow {
-		margin-top: 0.6em;
+		margin-top: 1.0em;
 	}
 
 	.yesterday a, .tomorrow a {
@@ -153,20 +175,41 @@ footer {
 		height: auto;
 	}
 
-		h1 img {
-			display: none;
-		}
-
-	.yesterday, .tomorrow {
-		margin-top: 0.5%;
+	.logo {
+		width: 30px;
+		height: 30px;
 	}
 
-		.yesterday a, .tomorrow a {
-			font-size: 1.1em;
-		}
+	.yesterday, .tomorrow {
+		margin-top: 0.5em;
+	}
+
+	.yesterday a, .tomorrow a {
+		font-size: 1.1em;
+	}
 }
 
-@media (max-width: 350px) {
+@media (max-width: 500px) {
+	.yesterday, .tomorrow {
+		margin-top: auto;
+	}
+
+	.yesterday a, .tomorrow a {
+		font-size: 1.0em;
+	}
+
+	.logo {
+		display: none;
+	}
+}
+
+@media (max-width: 400px) {
+	.yesterday a, .tomorrow a {
+		font-size: 0.9em;
+	}
+}
+
+@media (max-width: 319px) {
 	.yesterday, .tomorrow {
 		display: none;
 	}

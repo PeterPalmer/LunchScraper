@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="MenuReaders\EuropaReader.cs" />
     <Compile Include="MenuReaders\SabisReaderBase.cs" />
+    <Compile Include="MenuReaders\TegeluddenReader.cs" />
     <Compile Include="MenuReaders\TennishallenReader.cs" />
     <Compile Include="Utility\DateHelper.cs" />
     <Compile Include="Domain\Dish.cs" />

@@ -63,7 +63,7 @@ namespace LunchScraper.Core.Utility
 			CultureInfo swedish = new CultureInfo("sv-SE");
 			DateTimeFormatInfo dtfi = swedish.DateTimeFormat;
 
-			return dtfi.DayNames[(int)dayOfWeek].ToUpper();
+			return dtfi.DayNames[(int)dayOfWeek];
 		}
 
 		public static int GetWeekNumber()
