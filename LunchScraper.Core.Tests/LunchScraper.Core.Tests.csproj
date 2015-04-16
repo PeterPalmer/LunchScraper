@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.4.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\iTextSharp.5.5.4\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
     </Reference>
@@ -55,6 +59,7 @@
   <ItemGroup>
     <Compile Include="MenuReaders\LansrattenReaderTests.cs" />
     <Compile Include="MenuReaders\EuropaReaderTests.cs" />
+    <Compile Include="MenuReaders\PontusFyranReaderTests.cs" />
     <Compile Include="MenuReaders\TennisHallenReaderTests.cs" />
     <Compile Include="MenuReaders\TegeluddenReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestInput\PontusFyranV15.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="TestInput\PontusFyranV16.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

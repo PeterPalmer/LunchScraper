@@ -33,6 +33,9 @@
     <Reference Include="CsQuery">
       <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.4\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -45,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="MenuReaders\EuropaReader.cs" />
+    <Compile Include="MenuReaders\PontusFyranReader.cs" />
     <Compile Include="MenuReaders\SabisReaderBase.cs" />
     <Compile Include="MenuReaders\TegeluddenReader.cs" />
     <Compile Include="MenuReaders\TennishallenReader.cs" />
@@ -55,7 +59,9 @@
     <Compile Include="MenuReaders\LansrattenReader.cs" />
     <Compile Include="MenuReaders\MenuReaderBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\IPdfScraper.cs" />
     <Compile Include="Utility\IWebScraper.cs" />
+    <Compile Include="Utility\PdfScraper.cs" />
     <Compile Include="Utility\WebScraper.cs" />
   </ItemGroup>
   <ItemGroup>

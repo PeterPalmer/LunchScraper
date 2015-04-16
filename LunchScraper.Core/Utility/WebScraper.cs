@@ -16,7 +16,7 @@ namespace LunchScraper.Core.Utility
 			var htmlResult = SendWebRequest(url, 0);
 
 			timer.Stop();
-			Debug.WriteLine(String.Concat("Finished: ", url, " After: ", timer.Elapsed));
+			Debug.WriteLine(String.Concat("[WebScraper] Finished: ", url, " After: ", timer.Elapsed));
 
 			return htmlResult;
 		}
@@ -62,7 +62,7 @@ namespace LunchScraper.Core.Utility
 				var failedResponse = ex.Response as HttpWebResponse;
 				if (failedResponse != null)
 				{
-					Debug.WriteLine("Failed with status code: {0} {1}", failedResponse.StatusCode, (int)failedResponse.StatusCode);
+					Debug.WriteLine("[WebScraper] Failed with status code: {0} {1}", failedResponse.StatusCode, (int)failedResponse.StatusCode);
 				}
 
 				return Retry(url, retryAttempt);
@@ -87,12 +87,12 @@ namespace LunchScraper.Core.Utility
 		{
 			if (retryAttempt >= 3)
 			{
-				Debug.WriteLine("Gave up on url {0} after {1} attempts", url, retryAttempt);
+				Debug.WriteLine("[WebScraper] Gave up on url {0} after {1} attempts", url, retryAttempt);
 				return string.Empty;
 			}
 
 			retryAttempt++;
-			Debug.WriteLine("Retry attempt {0} for url {1}", retryAttempt, url);
+			Debug.WriteLine("[WebScraper] Retry attempt {0} for url {1}", retryAttempt, url);
 
 			return this.SendWebRequest(url, retryAttempt);
 		}

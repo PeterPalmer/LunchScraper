@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using LunchScraper.Core.Domain;
 using LunchScraper.Core.MenuReaders;
@@ -52,18 +54,26 @@ namespace LunchScraper.Controllers
 				new LansrattenReader(scraper),
 				new EuropaReader(scraper),
 				new TegeluddenReader(scraper),
-				new TennishallenReader(scraper)
+				new TennishallenReader(scraper),
+				new PontusFyranReader(new PdfScraper())
 			};
 
 			var lunchMenus = new List<LunchMenu>();
 
-			foreach (var reader in menuReaders)
+			Parallel.ForEach(menuReaders, reader =>
 			{
-				var menu = reader.ReadWeeklyMenu();
-				lunchMenus.Add(menu);
-			}
+				try
+				{
+					var menu = reader.ReadWeeklyMenu();
+					lunchMenus.Add(menu);
+				}
+				catch (Exception ex)
+				{
+					var exceptionModel = new HandleErrorInfo(ex, reader.GetType().Name, "ReadWeeklyMenu");
+				}
+			});
 
-			model.LunchMenus = lunchMenus;
+			model.LunchMenus = lunchMenus.OrderBy(lm => lm.Restaurant);
 
 			System.Web.HttpContext.Current.Application.Lock();
 			System.Web.HttpContext.Current.Application["Model"] = model;

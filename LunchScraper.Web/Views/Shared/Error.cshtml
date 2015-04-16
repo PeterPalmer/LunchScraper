@@ -1,9 +1,26 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 
 @{
-    ViewBag.Title = "Error";
+    ViewBag.Title = "Skit också";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="body-content error">
+	<h1>Äsch.</h1>
+	<h2>Något gick galet så att lunchskrapningen havererade.</h2>
+</div>
 
+<div id="ExceptionHeader" onclick="ToggleExceptionBody();">
+	<h3>@Model.Exception.Message</h3>
+</div>
+<div id="ExceptionBody" style="display: none;" onclick="ToggleExceptionBody();">
+	@{
+		var currentException = Model.Exception;
+
+		while (currentException != null)
+		{
+			<h3>@currentException.Message</h3>
+			<pre>@currentException.StackTrace</pre>
+			currentException = currentException.InnerException;
+		}
+	}
+</div>

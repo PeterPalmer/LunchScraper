@@ -148,6 +148,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
     <Content Include="Content\KnifeFork.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

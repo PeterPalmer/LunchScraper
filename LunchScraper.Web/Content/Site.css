@@ -5,10 +5,6 @@
 	vertical-align: baseline;
 }
 
-html {
-	padding-bottom: 80px;
-}
-
 body {
 	line-height: 1;
 	height: 100%;
@@ -39,9 +35,9 @@ li {
 	text-decoration: none;
 }
 
-	.body-content a:hover {
-		text-decoration: underline;
-	}
+.body-content a:hover {
+	text-decoration: underline;
+}
 
 .body-content {
 	width: 75%;
@@ -51,6 +47,22 @@ li {
 
 .placeHolder {
 	width: 100px;
+}
+
+.error {
+	padding: 1em;
+	margin: 1em;
+	border: 3px dashed #cd5c5c;
+}
+
+#ExceptionBody, #ExceptionHeader {
+	cursor: pointer;
+	margin-left: 1em;
+	margin-top: 0.5em;
+}
+
+#ExceptionBody h3 {
+	margin-top: 0.5em;
 }
 
 .dish {

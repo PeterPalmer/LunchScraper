@@ -40,7 +40,7 @@ namespace LunchScraper.Core.MenuReaders
 			}
 
 			sw.Stop();
-			Debug.WriteLine("Elapsed: {0}", sw.Elapsed);
+			Debug.WriteLine("[SabisReaderBase] Scraped {0} in {1}", this.RestaurantName, sw.Elapsed);
 
 			return weeklyMenu;
 		}

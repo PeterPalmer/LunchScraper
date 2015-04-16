@@ -9,7 +9,7 @@ namespace LunchScraper.Core.Tests.MenuReaders
 	public class LansrattenReaderTests
 	{
 		[TestMethod]
-		public void ReadWeeklyMenu_CanParseHtml()
+		public void ReadWeeklyMenu_CanParseHtmlWeek14()
 		{
 			// Arrange
 			var scraper = TestHelper.MockWebScraper(@"TestInput\LänsrättenV14.htm");
@@ -27,6 +27,20 @@ namespace LunchScraper.Core.Tests.MenuReaders
 			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "Thai fishcakes med sesamfrästa grönsaker och soyadipp"));
 			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "Ekologisk ärtsoppa med svenskt fläsk samt pannkaka med Länsrättens bärsylt"));
 			Assert.IsTrue(menu.Dishes.Any(d => d.Description == "GLAD PÅSK ÖNSKAR PERSONALEN PÅ LÄNSRÄTTEN"));
+		}
+
+		[TestMethod]
+		public void ReadWeeklyMenu_FailGracefully()
+		{
+			// Arrange - Invalid input
+			var scraper = TestHelper.MockWebScraper(@"TestInput\CafeTegeluddenV14.htm");
+			var menuReader = new LansrattenReader(scraper);
+
+			// Act
+			var menu = menuReader.ReadWeeklyMenu();
+
+			// Assert
+			Assert.AreEqual(0, menu.Dishes.Count);
 		}
 	}
 }
