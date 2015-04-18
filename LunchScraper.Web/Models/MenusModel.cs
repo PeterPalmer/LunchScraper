@@ -15,7 +15,9 @@ namespace LunchScraper.Models
 				new DayModel(DateHelper.TuesdayThisWeek()),
 				new DayModel(DateHelper.WednesdayThisWeek()),
 				new DayModel(DateHelper.ThursdayThisWeek()),
-				new DayModel(DateHelper.FridayThisWeek())
+				new DayModel(DateHelper.FridayThisWeek()),
+				new DayModel(DateHelper.SaturdayThisWeek()),
+				new DayModel(DateHelper.SundayThisWeek())
 			};
 
 			CreatedAt = DateTime.Now;

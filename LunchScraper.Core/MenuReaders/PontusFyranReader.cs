@@ -24,7 +24,7 @@ namespace LunchScraper.Core.MenuReaders
 
 		public LunchMenu ReadWeeklyMenu()
 		{
-			var menu = new LunchMenu("Pontus på Fyran", "http://pontusfrithiof.com/pontus/pontus-pa-fyran/");
+			var menu = new LunchMenu("Pontus på Fyran", "http://pontusfrithiof.com/pontus/pontus-pa-fyran/", 3);
 
 			var week = DateHelper.GetWeekNumber();
 			var year = DateTime.Today.Year - 2000;

@@ -31,7 +31,7 @@
 
 	<div class="body-content" id="@String.Format("body{0}", day.Id)" style="display: @displayStyle">
 
-		@foreach (var lunchMenu in Model.LunchMenus)
+		@foreach (var lunchMenu in Model.LunchMenus.Where(lm => lm.Dishes.Any(d => d.Date == day.Date)))
 		{
 			<div class="menu">
 				<a href="@lunchMenu.Webpage" title="@lunchMenu.Webpage">@lunchMenu.Restaurant</a>

@@ -5,13 +5,19 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using LunchScraper.Core.Domain;
 using LunchScraper.Core.MenuReaders;
-using LunchScraper.Core.Utility;
 using LunchScraper.Models;
 
 namespace LunchScraper.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly IMenuReader[] _readers;
+
+		public HomeController(IMenuReader[] readers)
+		{
+			_readers = readers;
+		}
+
 		public ActionResult Index()
 		{
 			MenusModel model = GetModelFromSession();
@@ -43,24 +49,12 @@ namespace LunchScraper.Controllers
 			return model;
 		}
 
-		private static MenusModel ScrapeMenus()
+		private MenusModel ScrapeMenus()
 		{
 			var model = new MenusModel();
-
-			var scraper = new WebScraper();
-
-			var menuReaders = new List<IMenuReader>
-			{
-				new LansrattenReader(scraper),
-				new EuropaReader(scraper),
-				new TegeluddenReader(scraper),
-				new TennishallenReader(scraper),
-				new PontusFyranReader(new PdfScraper())
-			};
-
 			var lunchMenus = new List<LunchMenu>();
 
-			Parallel.ForEach(menuReaders, reader =>
+			Parallel.ForEach(_readers, reader =>
 			{
 				try
 				{
@@ -73,7 +67,7 @@ namespace LunchScraper.Controllers
 				}
 			});
 
-			model.LunchMenus = lunchMenus.OrderBy(lm => lm.Restaurant);
+			model.LunchMenus = lunchMenus.OrderBy(lm => lm.SortOrder);
 
 			System.Web.HttpContext.Current.Application.Lock();
 			System.Web.HttpContext.Current.Application["Model"] = model;

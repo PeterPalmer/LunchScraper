@@ -48,6 +48,16 @@ namespace LunchScraper.Core.Utility
 			return MondayThisWeek().AddDays(4);
 		}
 
+		public static DateTime SaturdayThisWeek()
+		{
+			return MondayThisWeek().AddDays(5);
+		}
+
+		public static DateTime SundayThisWeek()
+		{
+			return MondayThisWeek().AddDays(6);
+		}
+
 		public static DateTime WeekdayToDate(string weekday)
 		{
 			if (!_dateLookup.ContainsKey(weekday.ToLower()))

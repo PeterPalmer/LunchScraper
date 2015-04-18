@@ -4,8 +4,7 @@ namespace LunchScraper.Core.MenuReaders
 {
 	public class TennishallenReader : SabisReaderBase
 	{
-		public TennishallenReader(IWebScraper scraper)
-			: base(scraper, "Tennishallen")
+		public TennishallenReader(IWebScraper scraper) : base(scraper, "Tennishallen", 5)
 		{
 		}
 

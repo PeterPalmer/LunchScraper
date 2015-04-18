@@ -4,8 +4,7 @@ namespace LunchScraper.Core.MenuReaders
 {
 	public class EuropaReader : SabisReaderBase
 	{
-		public EuropaReader(IWebScraper scraper)
-			: base(scraper, "Europa")
+		public EuropaReader(IWebScraper scraper) : base(scraper, "Europa", 2)
 		{
 		}
 

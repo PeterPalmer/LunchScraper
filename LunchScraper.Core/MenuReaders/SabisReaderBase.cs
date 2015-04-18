@@ -7,8 +7,11 @@ namespace LunchScraper.Core.MenuReaders
 {
 	public abstract class SabisReaderBase : MenuReaderBase
 	{
-		protected SabisReaderBase(IWebScraper scraper, string restaurantName) : base(scraper)
+		private readonly int _sortOrder;
+
+		protected SabisReaderBase(IWebScraper scraper, string restaurantName, int sortOrder) : base(scraper)
 		{
+			_sortOrder = sortOrder;
 			this.RestaurantName = restaurantName;
 		}
 
@@ -18,7 +21,7 @@ namespace LunchScraper.Core.MenuReaders
 		{
 			var sw = Stopwatch.StartNew();
 
-			var weeklyMenu = new LunchMenu(RestaurantName, MenuUrl);
+			var weeklyMenu = new LunchMenu(RestaurantName, MenuUrl, _sortOrder);
 
 			var html = Scraper.ScrapeWebPage(MenuUrl);
 			var cq = new CQ(html);

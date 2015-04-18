@@ -1,6 +1,6 @@
 ﻿
 function ShowDay(id) {
-	for (var i = 1; i < 6; i++) {
+	for (var i = 0; i < 7; i++) {
 		document.getElementById("header" + i).style.display = "none";
 		document.getElementById("body" + i).style.display = "none";
 	}

@@ -4,8 +4,7 @@ namespace LunchScraper.Core.MenuReaders
 {
 	public class LansrattenReader : SabisReaderBase
 	{
-		public LansrattenReader(IWebScraper scraper)
-			: base(scraper, "Länsrätten")
+		public LansrattenReader(IWebScraper scraper) : base(scraper, "Länsrätten", 1)
 		{
 		}
 
