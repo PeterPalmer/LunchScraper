@@ -48,7 +48,7 @@ namespace LunchScraper.Models
 		{
 			get
 			{
-				return this.Date.DayOfWeek < DayOfWeek.Friday;
+				return DayOfWeek.Sunday < Date.DayOfWeek && Date.DayOfWeek < DayOfWeek.Friday;
 			}
 		}
 

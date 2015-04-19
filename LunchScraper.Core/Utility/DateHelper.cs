@@ -25,6 +25,11 @@ namespace LunchScraper.Core.Utility
 				return today;
 			}
 
+			if (today.DayOfWeek == DayOfWeek.Sunday)
+			{
+				return today.AddDays(-6);
+			}
+
 			return today.AddDays(DayOfWeek.Monday - today.DayOfWeek);
 		}
 
