@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using LunchScraper.Core.Domain;
 using LunchScraper.Core.MenuReaders;
+using LunchScraper.Core.Storage;
 using LunchScraper.Models;
 
 namespace LunchScraper.Controllers
@@ -58,8 +59,13 @@ namespace LunchScraper.Controllers
 			{
 				try
 				{
-					var menu = reader.ReadWeeklyMenu();
-					lunchMenus.Add(menu);
+					var dishes = reader.ReadWeeklyMenu();
+
+					if (dishes != null && dishes.Count() != 0)
+					{
+						var menu = new LunchMenu(Restaurant.GetById(dishes.First().RestaurantId), dishes);
+						lunchMenus.Add(menu);
+					}
 				}
 				catch (Exception ex)
 				{
@@ -67,7 +73,7 @@ namespace LunchScraper.Controllers
 				}
 			});
 
-			model.LunchMenus = lunchMenus.OrderBy(lm => lm.SortOrder);
+			model.LunchMenus = lunchMenus.OrderBy(lm => lm.Restaurant.Id);
 
 			System.Web.HttpContext.Current.Application.Lock();
 			System.Web.HttpContext.Current.Application["Model"] = model;

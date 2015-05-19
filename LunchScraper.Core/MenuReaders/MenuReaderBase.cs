@@ -1,4 +1,5 @@
-﻿using LunchScraper.Core.Domain;
+﻿using System.Collections.Generic;
+using LunchScraper.Core.Domain;
 using LunchScraper.Core.Utility;
 
 namespace LunchScraper.Core.MenuReaders
@@ -12,8 +13,6 @@ namespace LunchScraper.Core.MenuReaders
 			this.Scraper = scraper;
 		}
 
-		public string RestaurantName { get; protected set; }
-
-		public abstract LunchMenu ReadWeeklyMenu();
+		public abstract List<Dish> ReadWeeklyMenu();
 	}
 }

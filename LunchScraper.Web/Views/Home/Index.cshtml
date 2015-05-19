@@ -8,6 +8,7 @@
 	string displayStyle = day.IsVisible ? "block" : "none";
 	int previousId = day.Id - 1;
 	int nextId = day.Id + 1;
+	DateTime currentDate = day.Date;
 
 	<header id="@String.Format("header{0}", day.Id)" style="display: @displayStyle">
 		@if (day.ShowPrevioustDayLink)
@@ -31,17 +32,17 @@
 
 	<div class="body-content" id="@String.Format("body{0}", day.Id)" style="display: @displayStyle">
 
-		@foreach (var lunchMenu in Model.LunchMenus.Where(lm => lm.Dishes.Any(d => d.Date == day.Date)))
-		{
+@foreach (var lunchMenu in Model.LunchMenus.OrderBy(lm => lm.Restaurant.Id).Where(lm => lm.Dishes.Any(d => d.Date == currentDate)))
+{
 			<div class="menu">
-				<a href="@lunchMenu.Webpage" title="@lunchMenu.Webpage">@lunchMenu.Restaurant</a>
+				<a href="@lunchMenu.Restaurant.Url" title="@lunchMenu.Restaurant.Name">@lunchMenu.Restaurant.Name</a>
 				<ul>
-					@foreach (var dish in lunchMenu.Dishes.Where(d => d.Date == day.Date))
+					@foreach (var dish in lunchMenu.Dishes.Where(d => d.Date == currentDate))
 					{
 						<li><span class="dish">@dish.Description</span></li>
 					}
 				</ul>
 			</div>
-		}
+}
 	</div>
 }

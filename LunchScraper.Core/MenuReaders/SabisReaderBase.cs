@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using CsQuery;
 using LunchScraper.Core.Domain;
 using LunchScraper.Core.Utility;
@@ -7,23 +8,19 @@ namespace LunchScraper.Core.MenuReaders
 {
 	public abstract class SabisReaderBase : MenuReaderBase
 	{
-		private readonly int _sortOrder;
-
-		protected SabisReaderBase(IWebScraper scraper, string restaurantName, int sortOrder) : base(scraper)
+		protected SabisReaderBase(IWebScraper scraper) : base(scraper)
 		{
-			_sortOrder = sortOrder;
-			this.RestaurantName = restaurantName;
 		}
 
-		protected abstract string MenuUrl { get; }
+		protected abstract Restaurant Restaurant { get; }
 
-		public override LunchMenu ReadWeeklyMenu()
+		public override List<Dish> ReadWeeklyMenu()
 		{
 			var sw = Stopwatch.StartNew();
 
-			var weeklyMenu = new LunchMenu(RestaurantName, MenuUrl, _sortOrder);
+			var dishes = new List<Dish>();
 
-			var html = Scraper.ScrapeWebPage(MenuUrl);
+			var html = Scraper.ScrapeWebPage(Restaurant.Url);
 			var cq = new CQ(html);
 			var dayContainerDivs = cq["div.lunch-day-container"];
 
@@ -35,17 +32,17 @@ namespace LunchScraper.Core.MenuReaders
 
 				foreach (var span in dishSpans)
 				{
-					var dish = new Dish(span.InnerText, menuDate);
-					weeklyMenu.Dishes.Add(dish);
+					var dish = new Dish(span.InnerText, menuDate, Restaurant.Id);
+					dishes.Add(dish);
 				}
 
 				menuDate = menuDate.AddDays(1);
 			}
 
 			sw.Stop();
-			Debug.WriteLine("[SabisReaderBase] Scraped {0} in {1}", this.RestaurantName, sw.Elapsed);
+			Debug.WriteLine("[SabisReaderBase] Scraped {0} in {1}", this.Restaurant.Name, sw.Elapsed);
 
-			return weeklyMenu;
+			return dishes;
 		}
 
 	}

@@ -1,18 +1,19 @@
-﻿using LunchScraper.Core.Utility;
+﻿using LunchScraper.Core.Domain;
+using LunchScraper.Core.Utility;
 
 namespace LunchScraper.Core.MenuReaders
 {
 	public class TennishallenReader : SabisReaderBase
 	{
-		public TennishallenReader(IWebScraper scraper) : base(scraper, "Tennishallen", 5)
+		public TennishallenReader(IWebScraper scraper) : base(scraper)
 		{
 		}
 
-		protected override string MenuUrl
+		protected override Restaurant Restaurant
 		{
 			get
 			{
-				return string.Concat("http://www.sabis.se/kungl-tennishallen/dagens-lunch-v", DateHelper.GetWeekNumber());
+				return Restaurant.TennisHallen;
 			}
 		}
 	}

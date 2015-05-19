@@ -1,19 +1,21 @@
+using LunchScraper.Core.Domain;
 using LunchScraper.Core.Utility;
 
 namespace LunchScraper.Core.MenuReaders
 {
 	public class EuropaReader : SabisReaderBase
 	{
-		public EuropaReader(IWebScraper scraper) : base(scraper, "Europa", 2)
+		public EuropaReader(IWebScraper scraper) : base(scraper)
 		{
 		}
 
-		protected override string MenuUrl
+		protected override Restaurant Restaurant
 		{
 			get
 			{
-				return string.Concat("http://www.sabis.se/europa/dagens-lunch-v", DateHelper.GetWeekNumber());
+				return Restaurant.Europa;
 			}
 		}
+
 	}
 }

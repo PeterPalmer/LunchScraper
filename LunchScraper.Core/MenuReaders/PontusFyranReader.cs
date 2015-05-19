@@ -22,13 +22,14 @@ namespace LunchScraper.Core.MenuReaders
 			_weekDays.Add("fredag", DateHelper.FridayThisWeek());
 		}
 
-		public LunchMenu ReadWeeklyMenu()
+		public List<Dish> ReadWeeklyMenu()
 		{
-			var menu = new LunchMenu("Pontus på Fyran", "http://pontusfrithiof.com/pontus/pontus-pa-fyran/", 3);
+			var dishes = new List<Dish>();
 
 			var week = DateHelper.GetWeekNumber();
-			var year = DateTime.Today.Year - 2000;
-			var url = String.Format("http://pontusfrithiof.com/wp-content/uploads/2015/04/P4_V.{0}-{1}.pdf", week, year);
+			var month = DateTime.Today.Month;
+			var year = DateTime.Today.Year;
+			var url = String.Format("http://pontusfrithiof.com/wp-content/uploads/{0}/{1}/P4_V.{2}-{3}.pdf", year, month.ToString("D2"), week, year - 2000);
 
 			string textFromPdf = _scraper.ScrapePdf(url);
 
@@ -40,26 +41,37 @@ namespace LunchScraper.Core.MenuReaders
 
 				while ((line = reader.ReadLine()) != null)
 				{
-					if (_weekDays.ContainsKey(line.Trim()))
+					if (string.IsNullOrWhiteSpace(line))
 					{
-						shouldAddDish = true;
-						dishDate = _weekDays[line.Trim()];
 						continue;
 					}
 
-					if (string.IsNullOrWhiteSpace(line))
+					var split = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+					var firstWord = split[0];
+
+					if (_weekDays.ContainsKey(firstWord.Trim()))
 					{
-						shouldAddDish = false;
+						shouldAddDish = true;
+
+						if (_weekDays.TryGetValue(firstWord, out dishDate))
+						{
+							continue;
+						}
+					}
+
+					if (line.Trim().Equals("FYRANS FREDAGSLÅDA", StringComparison.OrdinalIgnoreCase))
+					{
+						break;
 					}
 
 					if (shouldAddDish)
 					{
-						menu.Dishes.Add(new Dish(line.Trim(), dishDate));
+						dishes.Add(new Dish(line.Trim(), dishDate, Restaurant.PontusPåFyran.Id));
 					}
 				}
 			}
 
-			return menu;
+			return dishes;
 		}
 	}
 }

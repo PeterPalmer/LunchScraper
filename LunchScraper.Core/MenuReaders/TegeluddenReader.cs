@@ -10,35 +10,43 @@ namespace LunchScraper.Core.MenuReaders
 {
 	public class TegeluddenReader : MenuReaderBase
 	{
-		private static HashSet<string> _weekDays = new HashSet<string>(new[]
+		private static readonly HashSet<string> _weekDays = new HashSet<string>(new[]
 		{
 			"måndag", "tisdag", "onsdag","torsdag","fredag"
 		});
 
 		public TegeluddenReader(IWebScraper scraper) : base(scraper)
 		{
-			this.RestaurantName = "Café Tegeludden";
 		}
 
-		public override LunchMenu ReadWeeklyMenu()
+		public override List<Dish> ReadWeeklyMenu()
 		{
-			var url = "http://cafetegeludden.kvartersmenyn.se/";
-			var weeklyMenu = new LunchMenu(RestaurantName, url);
+			var dishes = new List<Dish>();
 
-			var html = Scraper.ScrapeWebPage(url);
+			var html = Scraper.ScrapeWebPage(Restaurant.CafeTegeludden.Url);
 			var cq = new CQ(html);
 
 			var dayMenus = cq[".menyn p"];
 
-			var date = DateHelper.MondayThisWeek();
+			var date = DateHelper.MondayThisWeek().AddDays(-1);
 
 			foreach (var dayMenu in dayMenus)
 			{
-				var dishes = dayMenu.InnerHTML.Split(new string[] { "<br />" }, StringSplitOptions.RemoveEmptyEntries);
+				var dishesArray = dayMenu.InnerHTML.Split(new string[] { "<br />" }, StringSplitOptions.RemoveEmptyEntries);
 
-				if(!ShouldParseDishes(dishes)) continue;
+				if (!ShoudlParse(dishesArray))
+				{
+					continue;
+				}
 
-				foreach (var dish in dishes.Skip(1))
+				int offset = 0;
+				if (StartsWithWeekDay(dishesArray))
+				{
+					date = date.AddDays(1);
+					offset = 1;
+				}
+
+				foreach (var dish in dishesArray.Skip(offset))
 				{
 					var description = dish.StripHtmlTags();
 
@@ -50,17 +58,15 @@ namespace LunchScraper.Core.MenuReaders
 
 					if (!string.IsNullOrWhiteSpace(description))
 					{
-						weeklyMenu.Dishes.Add(new Dish(dish.StripHtmlTags(), date));
+						dishes.Add(new Dish(dish.StripHtmlTags(), date, Restaurant.CafeTegeludden.Id));
 					}
 				}
-
-				date = date.AddDays(1);
 			}
 
-			return weeklyMenu;
+			return dishes;
 		}
 
-		private bool ShouldParseDishes(string[] dishes)
+		private bool StartsWithWeekDay(string[] dishes)
 		{
 			if (!dishes.Any())
 			{
@@ -71,6 +77,25 @@ namespace LunchScraper.Core.MenuReaders
 			firstLine = firstLine.TrimEnd(':');
 
 			if (!_weekDays.Contains(firstLine))
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		private bool ShoudlParse(string[] dishes)
+		{
+			if (!dishes.Any())
+			{
+				return false;
+			}
+
+			var firstLine = dishes[0].StripHtmlTags().ToLower();
+			firstLine = firstLine.TrimEnd(':');
+
+			if (firstLine.StartsWith("pris", StringComparison.OrdinalIgnoreCase) ||
+				firstLine.StartsWith("lunch", StringComparison.OrdinalIgnoreCase))
 			{
 				return false;
 			}
