@@ -145,6 +145,15 @@ footer {
 	clear: both;
 }
 
+.infoText {
+	color: #00A;
+	border: 1px solid #00A;
+	padding: 4px;
+	margin: 1em 5%;
+	display: block;
+	align-content: center;
+}
+
 @media (max-width: 750px) {
 	.body-content {
 		width: 85%;

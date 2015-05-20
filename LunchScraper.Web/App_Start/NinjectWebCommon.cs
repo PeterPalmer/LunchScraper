@@ -2,6 +2,7 @@ using System;
 using System.Web;
 using LunchScraper;
 using LunchScraper.Core.MenuReaders;
+using LunchScraper.Core.Storage;
 using LunchScraper.Core.Utility;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
@@ -62,14 +63,7 @@ namespace LunchScraper
 		/// <param name="kernel">The kernel.</param>
 		private static void RegisterServices(IKernel kernel)
 		{
-			kernel.Bind<IWebScraper>().To<WebScraper>();
-			kernel.Bind<IPdfScraper>().To<PdfScraper>();
-
-			kernel.Bind<IMenuReader>().To<LansrattenReader>();
-			kernel.Bind<IMenuReader>().To<EuropaReader>();
-			kernel.Bind<IMenuReader>().To<PontusFyranReader>();
-			kernel.Bind<IMenuReader>().To<TegeluddenReader>();
-			kernel.Bind<IMenuReader>().To<TennishallenReader>();
+			kernel.Bind<IMenuRepository>().To<MenuRepository>();
 		}
 	}
 }

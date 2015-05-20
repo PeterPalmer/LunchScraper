@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using LunchScraper.Core.Domain;
 using LunchScraper.Core.MenuReaders;
 using LunchScraper.Core.Storage;
@@ -54,10 +55,10 @@ namespace LunchScraper.MenuReaderJob
 
 				var dishes = new List<Dish>();
 
-				foreach (var reader in menuReaders)
+				Parallel.ForEach(menuReaders, reader =>
 				{
 					dishes.AddRange(reader.ReadWeeklyMenu());
-				}
+				});
 
 				return dishes;
 			}

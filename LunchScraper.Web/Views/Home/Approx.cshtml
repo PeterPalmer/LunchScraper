@@ -1,0 +1,26 @@
+﻿@model LunchScraper.Models.MenusModel
+@{
+    ViewBag.Title = "Approx";
+}
+
+<header>
+	<nav class="yesterday whiteFat"><a rel="prev" href="/">&laquo; Tillbaka</a></nav>
+	<h1><span class="logo"></span><span class="whiteFat">Approximerad meny</span></h1>
+</header>
+
+<p align="center" class="infoText">Denna meny är baserad på frekvensanalys av tidigare menyer.</p>
+
+<div class="body-content">
+	@foreach (var lunchMenu in Model.LunchMenus)
+	{
+		<div class="menu">
+			<a href="@lunchMenu.Restaurant.Url" title="@lunchMenu.Restaurant.Name">@lunchMenu.Restaurant.Name</a>
+			<ul>
+				@foreach (var dish in lunchMenu.Dishes)
+				{
+					<li><span class="dish">@dish.Description</span></li>
+				}
+			</ul>
+		</div>
+	}
+</div>

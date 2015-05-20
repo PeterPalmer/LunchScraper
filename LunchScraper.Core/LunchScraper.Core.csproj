@@ -82,6 +82,7 @@
     <Compile Include="MenuReaders\SabisReaderBase.cs" />
     <Compile Include="MenuReaders\TegeluddenReader.cs" />
     <Compile Include="MenuReaders\TennishallenReader.cs" />
+    <Compile Include="Storage\IMenuRepository.cs" />
     <Compile Include="Storage\MenuRepository.cs" />
     <Compile Include="Utility\DateHelper.cs" />
     <Compile Include="Domain\Dish.cs" />
