@@ -102,7 +102,7 @@ namespace LunchScraper.DataStructures
 				description = String.Concat(description, " ", word);
 				counter++;
 
-				if (counter > wordCount)
+				if (counter > wordCount && word != "och")
 				{
 					break;
 				}

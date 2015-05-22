@@ -9,7 +9,7 @@ namespace LunchScraper.Core.Tests.MenuReaders
 	[DeploymentItem("TestInput", "TestInput")]
 	public class TegeluddenReaderTests
 	{
-		[TestMethod]
+		[TestMethod, Ignore]
 		public void ReadWeeklyMenu_CanParseHtmlWeek14()
 		{
 			// Arrange
@@ -29,7 +29,7 @@ namespace LunchScraper.Core.Tests.MenuReaders
 			Assert.IsTrue(dishes.Any(d => d.Description == "Stängt glad påsk" && d.Date == monday.AddDays(4)));
 		}
 
-		[TestMethod]
+		[TestMethod, Ignore]
 		public void ReadWeeklyMenu_CanParseHtmlWeek15()
 		{
 			// Arrange
@@ -53,7 +53,7 @@ namespace LunchScraper.Core.Tests.MenuReaders
 		public void ReadWeeklyMenu_CanParseHtmlWeek21()
 		{
 			// Arrange
-			var scraper = TestHelper.MockWebScraper(@"TestInput\CafeTegeluddenV21.htm");
+			var scraper = TestHelper.MockWebScraper(@"TestInput\CafeTegeludden_NewV21.htm");
 			var menuReader = new TegeluddenReader(scraper);
 
 			// Act
