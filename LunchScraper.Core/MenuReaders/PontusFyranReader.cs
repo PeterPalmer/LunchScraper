@@ -29,9 +29,19 @@ namespace LunchScraper.Core.MenuReaders
 			var week = DateHelper.GetWeekNumber();
 			var month = DateTime.Today.Month;
 			var year = DateTime.Today.Year;
+
 			var url = String.Format("http://pontusfrithiof.com/wp-content/uploads/{0}/{1}/P4_V.{2}-{3}.pdf", year, month.ToString("D2"), week, year - 2000);
 
-			string textFromPdf = _scraper.ScrapePdf(url);
+			string textFromPdf = "";
+			try
+			{
+				textFromPdf = _scraper.ScrapePdf(url);
+			}
+			catch (System.Net.WebException)
+			{
+				url = String.Format("http://pontusfrithiof.com/wp-content/uploads/{0}/{1}/V.{2}-{3}.pdf", year, month.ToString("D2"), week, year - 2000);
+				textFromPdf = _scraper.ScrapePdf(url);
+			}
 
 			using (var reader = new StringReader(textFromPdf))
 			{
