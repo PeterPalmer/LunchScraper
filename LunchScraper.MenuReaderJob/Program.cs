@@ -49,25 +49,22 @@ namespace LunchScraper.MenuReaderJob
 
 		private static List<Dish> GetDishes()
 		{
-			try
+			var dishes = new List<Dish>();
+			var menuReaders = GetMenuReaders();
+
+			Parallel.ForEach(menuReaders, reader =>
 			{
-				var menuReaders = GetMenuReaders();
-
-				var dishes = new List<Dish>();
-
-				Parallel.ForEach(menuReaders, reader =>
+				try
 				{
 					dishes.AddRange(reader.ReadWeeklyMenu());
-				});
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine("GetDishes failed!\r\n{0}", ex.Message);
+				}
+			});
 
-				return dishes;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("GetDishes failed!\r\n{0}", ex.Message);
-			}
-
-			return null;
+			return dishes;
 		}
 
 		private static IEnumerable<IMenuReader> GetMenuReaders()
