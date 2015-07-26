@@ -40,8 +40,8 @@ namespace LunchScraper.Controllers
 
 			for (int i = 0; i < markovChains.Count; i++)
 			{
-				var wordCount = 7 + _randomizer.Next(0, 5);
-				string description = markovChains[i].GenerateSentence(wordCount);
+				var wordCount = 3 + _randomizer.Next(0, 5);
+				string description = markovChains[i].GenerateSentence(wordCount, 15);
 				var dishes = new List<Dish> { new Dish(description, DateTime.Today, 1) };
 
 				lunchMenus.Add(new LunchMenu(Restaurant.GetById(i + 1), dishes));
@@ -65,12 +65,17 @@ namespace LunchScraper.Controllers
 
 			var markovChains = new List<MarkovChain>();
 
-			foreach (var dishGroup in allDishes.GroupBy(d => d.RestaurantId).OrderBy(g => g.Key))
+			foreach (var dishesGroupedByRestaurant in allDishes.GroupBy(d => d.RestaurantId).OrderBy(g => g.Key))
 			{
-				var dishTexts = dishGroup.Select(d => d.Description);
+				var dishes = dishesGroupedByRestaurant.Select(d => d.Description);
 
 				var markov = new MarkovChain();
-				dishTexts.ForEach(txt => markov.AddMultipleWords(txt));
+				dishes.ForEach(txt =>
+				{
+					markov.AddMultipleWords(txt);
+					markov.AddWord(".");
+				});
+
 				markovChains.Add(markov);
 			}
 

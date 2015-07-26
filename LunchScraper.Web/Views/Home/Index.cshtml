@@ -32,12 +32,12 @@
 
 	<div class="body-content" id="@String.Format("body{0}", day.Id)" style="display: @displayStyle">
 
-@foreach (var lunchMenu in Model.LunchMenus.OrderBy(lm => lm.Restaurant.Id).Where(lm => lm.Dishes.Any(d => d.Date == currentDate)))
+@foreach (var lunchMenu in Model.LunchMenus.OrderBy(lm => lm.Restaurant.Id).Where(lm => lm.Dishes.Any(d => d.Date.Date == currentDate.Date)))
 {
 			<div class="menu">
 				<a href="@lunchMenu.Restaurant.Url" title="@lunchMenu.Restaurant.Name">@lunchMenu.Restaurant.Name</a>
 				<ul>
-					@foreach (var dish in lunchMenu.Dishes.Where(d => d.Date == currentDate))
+					@foreach (var dish in lunchMenu.Dishes.Where(d => d.Date.Date == currentDate.Date))
 					{
 						<li><span class="dish">@dish.Description</span></li>
 					}

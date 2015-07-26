@@ -60,6 +60,10 @@ namespace LunchScraper.Core.MenuReaders
 				}
 			}
 
+			if (date == DateHelper.MondayThisWeek().AddDays(-1))
+			{
+				dishes.Clear();
+			}
 
 			return dishes;
 		}

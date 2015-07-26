@@ -5,19 +5,21 @@ using System.Linq;
 
 namespace LunchScraper.DataStructures
 {
-
 	public class MarkovChain : IEnumerable<string>
 	{
+		private const string PeriodCharacter = ".";
+
 		private readonly SparseMatrix _matrix = new SparseMatrix();
 		private readonly Dictionary<string, int> _wordIndexLookup = new Dictionary<string, int>();
 		private readonly Dictionary<int, string> _indexWordLookup = new Dictionary<int, string>();
 		private readonly GraphNode _rootNode;
 		private readonly Random _randomizer = new Random((int)DateTime.Now.Ticks);
-		private int _currentIndex;
+		private int _currentIndex = 1;
 
 		public MarkovChain()
 		{
 			_rootNode = new GraphNode(_matrix, 0, 0);
+			AddWord(PeriodCharacter);
 		}
 
 		public GraphNode RootNode
@@ -53,35 +55,63 @@ namespace LunchScraper.DataStructures
 
 		public void AddMultipleWords(string inputText)
 		{
-			var wordList = inputText.Split(new[] { ' ', '-', '.', ',', '”', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+			var wordList = inputText.Split(new[] { ' ', '-', ',', '”', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
 			foreach (var word in wordList)
 			{
-				this.AddWord(word);
+				if (word.EndsWith("."))
+				{
+					AddWord(word.Remove(word.Length - 1));
+					AddWord(PeriodCharacter);
+				}
+				else
+				{
+					AddWord(word);
+				}
 			}
+		}
+
+		public string GenerateSentence(int minWords, int maxWords)
+		{
+			string sentence = "";
+			int counter = 1;
+
+			foreach (var word in this)
+			{
+				if (word.Equals(PeriodCharacter))
+				{
+					sentence = String.Concat(sentence, word);
+				}
+				else
+				{
+					sentence = String.Concat(sentence, " ", word);
+				}
+
+				counter++;
+
+				if (word.Equals(PeriodCharacter) && counter >= minWords)
+				{
+					break;
+				}
+
+				if (counter >= maxWords)
+				{
+					break;
+				}
+			}
+
+			return sentence;
 		}
 
 		public IEnumerator<string> GetEnumerator()
 		{
-			var currentNode = _rootNode;
+			var currentNode = GetRandomChild(_rootNode);
 
 			while (currentNode.Children.Count != 0)
 			{
 				yield return _indexWordLookup[currentNode.NodeIndex];
 
-				var random = _randomizer.Next(currentNode.Children.Sum(c => c.Weight));
-				var offSet = 0;
-
-				foreach (var child in currentNode.Children)
-				{
-					if (random < child.Weight + offSet)
-					{
-						currentNode = child;
-						break;
-					}
-
-					offSet += child.Weight;
-				}
+				currentNode = GetRandomChild(currentNode);
 			}
 
 			yield return _indexWordLookup[currentNode.NodeIndex];
@@ -92,23 +122,22 @@ namespace LunchScraper.DataStructures
 			return GetEnumerator();
 		}
 
-		public string GenerateSentence(int wordCount)
+		private GraphNode GetRandomChild(GraphNode currentNode)
 		{
-			string description = "";
-			int counter = 1;
+			var random = _randomizer.Next(currentNode.Children.Sum(c => c.Weight));
+			var offSet = 0;
 
-			foreach (var word in this)
+			foreach (var child in currentNode.Children)
 			{
-				description = String.Concat(description, " ", word);
-				counter++;
-
-				if (counter > wordCount && word != "och")
+				if (random < child.Weight + offSet)
 				{
-					break;
+					return child;
 				}
+
+				offSet += child.Weight;
 			}
 
-			return description;
+			return currentNode.Children.First();
 		}
 
 	}

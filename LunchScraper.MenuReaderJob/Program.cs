@@ -15,7 +15,7 @@ namespace LunchScraper.MenuReaderJob
 		static void Main()
 		{
 			var dayOfWeek = DateTime.Now.DayOfWeek;
-			if (dayOfWeek == DayOfWeek.Friday|| dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday)
+			if (dayOfWeek == DayOfWeek.Friday || dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday)
 			{
 				return;
 			}
@@ -23,6 +23,8 @@ namespace LunchScraper.MenuReaderJob
 			var stopWatch = System.Diagnostics.Stopwatch.StartNew();
 
 			var dishes = GetDishes();
+			dishes.ForEach(d => d.Date = DateTime.SpecifyKind(d.Date, DateTimeKind.Utc));
+
 			StoreDishes(dishes);
 
 			stopWatch.Stop();
@@ -60,7 +62,7 @@ namespace LunchScraper.MenuReaderJob
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine("GetDishes failed!\r\n{0}", ex.Message);
+					Console.WriteLine("{0}.GetDishes failed!\r\n{1}", reader.GetType().Name, ex.Message);
 				}
 			});
 
