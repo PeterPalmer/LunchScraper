@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <NuGetPackageImportStamp>7a3cb3a7</NuGetPackageImportStamp>
     <ApplicationInsightsResourceId>/subscriptions/23146842-a070-473f-92dd-1dccd558d8ed/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/LunchScraper</ApplicationInsightsResourceId>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -225,7 +226,7 @@
     <Content Include="ConnectionStrings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\lunchscraper.pubxml" />
+    <None Include="Properties\PublishProfiles\lunchscraper_publish.pubxml" />
     <Content Include="Views\Home\Approx.cshtml" />
   </ItemGroup>
   <PropertyGroup>
