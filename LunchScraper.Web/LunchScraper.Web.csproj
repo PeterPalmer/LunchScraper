@@ -226,7 +226,7 @@
     <Content Include="ConnectionStrings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\lunchscraper_publish.pubxml" />
+    <None Include="Properties\PublishProfiles\lunchscraper.pubxml" />
     <Content Include="Views\Home\Approx.cshtml" />
   </ItemGroup>
   <PropertyGroup>
