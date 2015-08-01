@@ -19,7 +19,7 @@ namespace LunchScraper.DataStructures.Tests
 			Assert.AreEqual(0, chain.RootNode.NodeIndex);
 			Assert.AreEqual(1, chain.RootNode.Children[0].NodeIndex);
 			Assert.AreEqual(2, chain.RootNode.Children[0].Children[0].NodeIndex);
-			Assert.AreEqual(0, chain.RootNode.Children[0].Children[0].Children.Count);
+			Assert.AreEqual(1, chain.RootNode.Children[0].Children[0].Children.Count);
 		}
 
 		[TestMethod]
@@ -32,9 +32,9 @@ namespace LunchScraper.DataStructures.Tests
 			chain.AddWord("A");
 			chain.AddWord("C");
 
-			Assert.AreEqual(2, chain.RootNode.Children.Count);
+			Assert.AreEqual(2, chain.RootNode.Children[0].Children.Count);
 			Assert.AreEqual(1, chain.RootNode.Children[0].NodeIndex);
-			Assert.AreEqual(2, chain.RootNode.Children[1].NodeIndex);
+			Assert.AreEqual(3, chain.RootNode.Children[0].Children[1].NodeIndex);
 		}
 
 		[TestMethod]
