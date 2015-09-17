@@ -37,7 +37,7 @@
 			<div class="menu">
 				<a href="@lunchMenu.Restaurant.Url" title="@lunchMenu.Restaurant.Name">@lunchMenu.Restaurant.Name</a>
 				<ul>
-					@foreach (var dish in lunchMenu.Dishes.Where(d => d.Date.Date == currentDate.Date))
+					@foreach (var dish in lunchMenu.GetDishes(currentDate.Date))
 					{
 						<li><span class="dish">@dish.Description</span></li>
 					}

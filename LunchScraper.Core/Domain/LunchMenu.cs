@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LunchScraper.Core.Domain
@@ -12,6 +13,11 @@ namespace LunchScraper.Core.Domain
 		{
 			this.Restaurant = restaurant;
 			this.Dishes = dishes.ToList();
+		}
+
+		public IEnumerable<Dish> GetDishes(DateTime day)
+		{
+			return Dishes.Where(d => d.Date.Date == day).OrderBy(d => d.Description);
 		}
 	}
 }
