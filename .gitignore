@@ -6,6 +6,5 @@ packages
 TestResults
 *.suo
 *.user
-*.pubxml
 *.pubxml.user
 ConnectionStrings.config

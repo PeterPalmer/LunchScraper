@@ -46,24 +46,6 @@ namespace LunchScraper.Core.MenuReaders
 
 				var dish = new Dish(description, menuDate, Restaurant.Aihaya.Id);
 				dishes.Add(dish);
-
-
-				//var weekCells = cq.Select(".td_title", tBody);
-
-				//foreach (var dayCell in weekCells)
-				//{
-				//	var description = dayCell.InnerText;
-
-				//	if (WebUtility.HtmlDecode(description).Trim().Equals("(v) – finns som vegeteriskt alternativ", StringComparison.OrdinalIgnoreCase))
-				//	{
-				//		continue;
-				//	}
-
-				//	var dish = new Dish(description, menuDate, Restaurant.Aihaya.Id);
-				//	dishes.Add(dish);
-				//}
-
-				//menuDate = menuDate.AddDays(1);
 			}
 
 			return dishes;
