@@ -23,6 +23,10 @@
 		{
 			<nav class="tomorrow whiteFat"><a rel="next" href="#" onclick='ShowDay(@nextId); return false;'>@day.Tomorrow &raquo;</a></nav>
 		}
+		else if (day.ShowApproxLink)
+		{
+			<nav class="tomorrow whiteFat"><a rel="next" href="@Url.Action("Approx")" >Approx &raquo;</a></nav>
+		}
 		else
 		{
 			<div class="tomorrow placeHolder"></div>

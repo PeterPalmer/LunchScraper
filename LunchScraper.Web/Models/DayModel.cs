@@ -59,5 +59,13 @@ namespace LunchScraper.Models
 				return this.Date.DayOfWeek > DayOfWeek.Monday;
 			}
 		}
+
+		public bool ShowApproxLink
+		{
+			get
+			{
+				return this.Date.DayOfWeek >= DayOfWeek.Friday || this.Date.DayOfWeek == DayOfWeek.Sunday;
+			}
+		}
 	}
 }
