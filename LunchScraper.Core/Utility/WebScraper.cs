@@ -32,6 +32,7 @@ namespace LunchScraper.Core.Utility
 				request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");
 				request.Proxy = new WebProxy();
 				request.Proxy.Credentials = CredentialCache.DefaultCredentials;
+				request.UserAgent = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.70 Safari/533.4";
 
 				//get response
 				using (var response = (HttpWebResponse) request.GetResponse())

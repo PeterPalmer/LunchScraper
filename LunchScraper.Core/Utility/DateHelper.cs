@@ -19,7 +19,10 @@ namespace LunchScraper.Core.Utility
 
 		public static DateTime MondayThisWeek()
 		{
-			var today = DateTime.Today;
+			var timeZone = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
+
+			var today = TimeZoneInfo.ConvertTime(DateTime.Today, timeZone);
+
 			if (today.DayOfWeek == DayOfWeek.Monday)
 			{
 				return today;

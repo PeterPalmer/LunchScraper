@@ -22,7 +22,7 @@ namespace LunchScraper.Core.Domain
 		public static Restaurant CafeTegeludden = new Restaurant(4, "Café Tegeludden", "http://cafetegeludden.kvartersmenyn.se/");
 		public static Restaurant TennisHallen = new Restaurant(5, "Tennishallen", string.Concat("http://www.sabis.se/kungl-tennishallen/dagens-lunch-v", DateHelper.GetWeekNumber()));
 		public static Restaurant Aihaya = new Restaurant(6, "Aiyara", "http://gastrogate.com/restaurang/aiyara/page/3/");
-		public static Restaurant Creme = new Restaurant(7, "Crème", "http://gardet.creme.se/meny");
+		public static Restaurant Creme = new Restaurant(7, "Crème", "https://www.facebook.com/Crème-Gärdet-228787733810379/timeline");
 
 		public static Restaurant GetById(int id)
 		{

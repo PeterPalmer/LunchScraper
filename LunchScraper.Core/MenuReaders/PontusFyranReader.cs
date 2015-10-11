@@ -22,25 +22,42 @@ namespace LunchScraper.Core.MenuReaders
 			_weekDays.Add("fredag", DateHelper.FridayThisWeek());
 		}
 
-		public List<Dish> ReadWeeklyMenu()
+		private string RetrievePdfText()
 		{
-			var dishes = new List<Dish>();
-
 			var week = DateHelper.GetWeekNumber();
 			var month = DateTime.Today.Month;
 			var year = DateTime.Today.Year;
 
-			var url = String.Format("http://pontusfrithiof.com/wp-content/uploads/{0}/{1}/P4_V.{2}-{3}.pdf", year, month.ToString("D2"), week, year - 2000);
+			var urlStack = new Stack<string>();
 
-			string textFromPdf = "";
-			try
+			urlStack.Push(String.Format("http://pontusfrithiof.com/wp-content/uploads/{0}/{1}/P4_V.{2}-{3}.pdf", year, month.ToString("D2"), week, year - 2000));
+			urlStack.Push(String.Format("http://pontusfrithiof.com/wp-content/uploads/{0}/{1}/V.{2}-{3}.pdf", year, month.ToString("D2"), week, year - 2000));
+			urlStack.Push(String.Format("http://pontusfrithiof.com/wp-content/uploads/{0}/{1}/P4_V.{2}.-{3}.pdf", year, month.ToString("D2"), week, year - 2000));
+
+			while (urlStack.Count > 0)
 			{
-				textFromPdf = _scraper.ScrapePdf(url);
+				var url = urlStack.Pop();
+				try
+				{
+					return _scraper.ScrapePdf(url);
+				}
+				catch (System.Net.WebException)
+				{
+				}
 			}
-			catch (System.Net.WebException)
+
+			return null;
+		}
+
+		public List<Dish> ReadWeeklyMenu()
+		{
+			var dishes = new List<Dish>();
+
+			var textFromPdf = RetrievePdfText();
+
+			if (string.IsNullOrEmpty(textFromPdf))
 			{
-				url = String.Format("http://pontusfrithiof.com/wp-content/uploads/{0}/{1}/V.{2}-{3}.pdf", year, month.ToString("D2"), week, year - 2000);
-				textFromPdf = _scraper.ScrapePdf(url);
+				return dishes;
 			}
 
 			using (var reader = new StringReader(textFromPdf))

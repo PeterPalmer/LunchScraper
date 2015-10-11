@@ -76,8 +76,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Restaurant.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="MenuReaders\AihayaReader.cs" />
+    <Compile Include="MenuReaders\CremeFejanReader.cs" />
     <Compile Include="MenuReaders\CremeReader.cs" />
     <Compile Include="MenuReaders\EuropaReader.cs" />
     <Compile Include="MenuReaders\PontusFyranReader.cs" />

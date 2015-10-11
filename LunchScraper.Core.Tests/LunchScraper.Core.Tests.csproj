@@ -86,6 +86,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MenuReaders\CremeFejanReaderTests.cs" />
     <Compile Include="MenuReaders\CremeReaderTests.cs" />
     <Compile Include="MenuReaders\AihayaReaderTests.cs" />
     <Compile Include="MenuReaders\LansrattenReaderTests.cs" />
@@ -117,6 +118,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestInput\CafeTegeludden_NewV21.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestInput\CremeFejan.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestInput\CremeV38.htm">

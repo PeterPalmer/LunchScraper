@@ -17,7 +17,7 @@ namespace LunchScraper.MenuReaderJob
 			Bind<IMenuReader>().To<TegeluddenReader>();
 			Bind<IMenuReader>().To<TennishallenReader>();
 			Bind<IMenuReader>().To<AihayaReader>();
-			Bind<IMenuReader>().To<CremeReader>();
+			Bind<IMenuReader>().To<CremeFejanReader>();
 		}
 	}
 }
