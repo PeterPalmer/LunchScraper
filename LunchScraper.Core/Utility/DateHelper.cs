@@ -84,11 +84,17 @@ namespace LunchScraper.Core.Utility
 			return dtfi.DayNames[(int)dayOfWeek];
 		}
 
+		public static int GetWeekNumber(DateTime date)
+		{
+			CultureInfo swedish = new CultureInfo("sv-SE");
+			Calendar calendar = swedish.DateTimeFormat.Calendar;
+
+			return calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
+		}
+
 		public static int GetWeekNumber()
 		{
-			GregorianCalendar cal = new GregorianCalendar(GregorianCalendarTypes.Localized);
-
-			return cal.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+			return GetWeekNumber(DateTime.Today);
 		}
 	}
 }

@@ -10,7 +10,10 @@ namespace LunchScraper.Models
 			this.Date = date;
 			this.Id = (int)date.DayOfWeek;
 
-			if (date == DateTime.Today)
+			var timeZone = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
+			var today = TimeZoneInfo.ConvertTime(DateTime.Today, timeZone);
+
+			if (date == today)
 			{
 				IsVisible = true;
 			}

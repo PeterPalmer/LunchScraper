@@ -34,6 +34,11 @@ namespace LunchScraper.Core.MenuReaders
 
 		public override List<Dish> ReadWeeklyMenu()
 		{
+			return ReadWeeklyMenu(DateHelper.MondayThisWeek());
+		}
+
+		public List<Dish> ReadWeeklyMenu(DateTime monday)
+		{
 			var dishes = new List<Dish>();
 
 			var html = Scraper.ScrapeWebPage("https://www.facebook.com/Crème-Gärdet-228787733810379/timeline");
@@ -58,8 +63,7 @@ namespace LunchScraper.Core.MenuReaders
 				return dishes;
 			}
 
-			var monday = DateHelper.MondayThisWeek();
-			var friday = DateHelper.FridayThisWeek();
+			var friday = monday.AddDays(4);
 
 			foreach (var wrapper in userContentWrappers)
 			{
