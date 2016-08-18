@@ -9,6 +9,8 @@ namespace LunchScraper.Core.MenuReaders
 {
 	public class CremeReader : MenuReaderBase
 	{
+		private static DateTime EveryDayOfWeek = DateTime.MaxValue;
+
 		public CremeReader(IWebScraper scraper) : base(scraper)
 		{
 
@@ -20,33 +22,46 @@ namespace LunchScraper.Core.MenuReaders
 
 			var html = Scraper.ScrapeWebPage(Restaurant.Creme.Url);
 			var cq = new CQ(html);
-			var menuDate = DateHelper.MondayThisWeek();
+			var currentDate = DateTime.MinValue;
 
-			var lunchMenuTags = cq[".category .media-heading, .courses .media-body"];
+			var lunchMenuTags = cq["div.meny"];
 
 			if (lunchMenuTags == null)
 			{
 				return dishes;
 			}
 
-			foreach (var tag in lunchMenuTags)
+			foreach (var tag in lunchMenuTags[0].ChildNodes)
 			{
-				if (tag.HasClass("media-heading"))
+				if (tag.NodeName != "#text" && WebUtility.HtmlDecode(tag.InnerText).Equals("Alltid på Gärdet", StringComparison.OrdinalIgnoreCase))
 				{
-					menuDate = ParseWeekDay(WebUtility.HtmlDecode(tag.InnerText).Trim());
+					break;
+				}
+
+				if (tag.NodeName.Equals("strong", StringComparison.OrdinalIgnoreCase))
+				{
+					currentDate = ParseWeekDay(WebUtility.HtmlDecode(tag.InnerText).Trim());
 					continue;
 				}
 
-				var heading = cq.Select(".media-heading", tag).FirstElement();
+				var heading = WebUtility.HtmlDecode(tag.NodeValue);
 
-				if (heading == null || !WebUtility.HtmlDecode(heading.InnerHTML).Trim().StartsWith("Dagens", StringComparison.OrdinalIgnoreCase))
+				if (String.IsNullOrWhiteSpace(heading) || currentDate == DateTime.MinValue)
 				{
 					continue;
 				}
 
-				var description = cq.Select("p", tag).FirstElement().InnerText;
-				var dish = new Dish(description, menuDate, Restaurant.Creme.Id);
-				dishes.Add(dish);
+				if (currentDate == EveryDayOfWeek)
+				{
+					for (int i = 0; i < 5; i++)
+					{
+						dishes.Add(new Dish(heading, DateHelper.MondayThisWeek().AddDays(i), Restaurant.Creme.Id));
+					}
+				}
+				else
+				{
+					dishes.Add(new Dish(heading, currentDate, Restaurant.Creme.Id));
+				}
 			}
 
 			return dishes;
@@ -77,6 +92,12 @@ namespace LunchScraper.Core.MenuReaders
 			if (text.StartsWith("Fredag", StringComparison.OrdinalIgnoreCase))
 			{
 				return DateHelper.FridayThisWeek();
+			}
+
+			if (text.StartsWith("Veckans pasta", StringComparison.OrdinalIgnoreCase) ||
+			    text.StartsWith("Veckans sallad", StringComparison.OrdinalIgnoreCase))
+			{
+				return EveryDayOfWeek;
 			}
 
 			return DateTime.MinValue;

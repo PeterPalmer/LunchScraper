@@ -15,7 +15,7 @@ namespace LunchScraper.MenuReaderJob
 		static void Main()
 		{
 			var dayOfWeek = DateTime.Now.DayOfWeek;
-			if (dayOfWeek == DayOfWeek.Friday || dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday)
+			if (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday)
 			{
 				return;
 			}

@@ -13,11 +13,11 @@ namespace LunchScraper.MenuReaderJob
 
 			Bind<IMenuReader>().To<LansrattenReader>();
 			Bind<IMenuReader>().To<EuropaReader>();
-			Bind<IMenuReader>().To<PontusFyranReader>();
+			//Bind<IMenuReader>().To<PontusFyranReader>();
 			Bind<IMenuReader>().To<TegeluddenReader>();
 			Bind<IMenuReader>().To<TennishallenReader>();
 			Bind<IMenuReader>().To<AihayaReader>();
-			Bind<IMenuReader>().To<CremeFejanReader>();
+			Bind<IMenuReader>().To<CremeReader>();
 		}
 	}
 }

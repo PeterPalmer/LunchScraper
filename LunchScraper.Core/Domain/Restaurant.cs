@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using LunchScraper.Core.Utility;
 
 namespace LunchScraper.Core.Domain
 {
@@ -16,13 +15,13 @@ namespace LunchScraper.Core.Domain
 			this.Url = url;
 		}
 
-		public static Restaurant Länsrätten = new Restaurant(1, "Länsrätten", string.Concat("http://www.sabis.se/lansforsakringar/dagens-lunch-v", DateHelper.GetWeekNumber()));
-		public static Restaurant Europa = new Restaurant(2, "Europa", string.Concat("http://www.sabis.se/europa/dagens-lunch-v", DateHelper.GetWeekNumber()));
+		public static Restaurant Länsrätten = new Restaurant(1, "Länsrätten", "https://www.sabis.se/lansforsakringar/dagens-lunch/");
+		public static Restaurant Europa = new Restaurant(2, "Europa", "https://www.sabis.se/europa/dagens-lunch/");
 		public static Restaurant PontusPåFyran = new Restaurant(3, "Pontus på Fyran", "http://pontusfrithiof.com/pontus/pontus-pa-fyran/");
 		public static Restaurant CafeTegeludden = new Restaurant(4, "Café Tegeludden", "http://cafetegeludden.kvartersmenyn.se/");
-		public static Restaurant TennisHallen = new Restaurant(5, "Tennishallen", string.Concat("http://www.sabis.se/kungl-tennishallen/dagens-lunch-v", DateHelper.GetWeekNumber()));
+		public static Restaurant TennisHallen = new Restaurant(5, "Tennishallen", "https://www.sabis.se/kungl-tennishallen/dagens-lunch/");
 		public static Restaurant Aihaya = new Restaurant(6, "Aiyara", "http://gastrogate.com/restaurang/aiyara/page/3/");
-		public static Restaurant Creme = new Restaurant(7, "Crème", "https://www.facebook.com/Crème-Gärdet-228787733810379/timeline");
+		public static Restaurant Creme = new Restaurant(7, "Crème", "http://cremegardet.kvartersmenyn.se/");
 
 		public static Restaurant GetById(int id)
 		{
