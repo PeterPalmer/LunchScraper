@@ -91,6 +91,7 @@
     <Compile Include="MenuReaders\CremeFejanReaderTests.cs" />
     <Compile Include="MenuReaders\CremeReaderTests.cs" />
     <Compile Include="MenuReaders\AihayaReaderTests.cs" />
+    <Compile Include="MenuReaders\KleinsRioReaderTests.cs" />
     <Compile Include="MenuReaders\LansrattenReaderTests.cs" />
     <Compile Include="MenuReaders\EuropaReaderTests.cs" />
     <Compile Include="MenuReaders\PontusFyranReaderTests.cs" />
@@ -126,6 +127,9 @@
     <Content Include="TestInput\CremeFejan.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestInput\CremeV19.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestInput\CremeV33.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -136,6 +140,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestInput\FunkalisticV15.htm" />
+    <Content Include="TestInput\KleinsRioV19.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestInput\LänsrättenV14.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

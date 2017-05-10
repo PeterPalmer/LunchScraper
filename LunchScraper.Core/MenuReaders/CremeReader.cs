@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Linq;
 using CsQuery;
 using LunchScraper.Core.Domain;
+using LunchScraper.Core.Extensions;
 using LunchScraper.Core.Utility;
 
 namespace LunchScraper.Core.MenuReaders
@@ -16,6 +17,11 @@ namespace LunchScraper.Core.MenuReaders
 
 		}
 
+		private static readonly HashSet<string> _weekDays = new HashSet<string>(new[]
+		{
+			"måndag", "tisdag", "onsdag","torsdag","fredag"
+		});
+
 		public override List<Dish> ReadWeeklyMenu()
 		{
 			var dishes = new List<Dish>();
@@ -24,83 +30,84 @@ namespace LunchScraper.Core.MenuReaders
 			var cq = new CQ(html);
 			var currentDate = DateTime.MinValue;
 
-			var lunchMenuTags = cq["div.meny"];
+			var dayMenu = cq["div.meny"].FirstOrDefault();
 
-			if (lunchMenuTags == null)
+			if (dayMenu == null)
 			{
 				return dishes;
 			}
 
-			foreach (var tag in lunchMenuTags[0].ChildNodes)
+			var date = DateHelper.MondayThisWeek().AddDays(-1);
+			var dishesArray = dayMenu.InnerHTML.Split(new[] { "<br />", "<br>" }, StringSplitOptions.RemoveEmptyEntries);
+
+			int offset = 0;
+			if (StartsWithWeekDay(dishesArray))
 			{
-				if (tag.NodeName != "#text" && WebUtility.HtmlDecode(tag.InnerText).Equals("Alltid på Gärdet", StringComparison.OrdinalIgnoreCase))
-				{
-					break;
-				}
+				date = date.AddDays(1);
+				offset = 1;
+			}
 
-				if (tag.NodeName.Equals("strong", StringComparison.OrdinalIgnoreCase))
+			bool areBelowWeekdays = false;
+			string recurringDish = string.Empty;
+
+			foreach (var dish in dishesArray.Skip(offset))
+			{
+				var description = dish.StripHtmlTags();
+
+				if (_weekDays.Contains(description.ToLower().TrimEnd(':')))
 				{
-					currentDate = ParseWeekDay(WebUtility.HtmlDecode(tag.InnerText).Trim());
+					date = date.AddDays(1);
 					continue;
 				}
 
-				var heading = WebUtility.HtmlDecode(tag.NodeValue);
-
-				if (String.IsNullOrWhiteSpace(heading) || currentDate == DateTime.MinValue)
+				if (description.StartsWith("Veckans", StringComparison.OrdinalIgnoreCase))
 				{
+					recurringDish = description;
+					areBelowWeekdays = true;
 					continue;
 				}
 
-				if (currentDate == EveryDayOfWeek)
+				if (!string.IsNullOrEmpty(recurringDish))
 				{
+					description = String.Concat(recurringDish, ": ", description);
+
 					for (int i = 0; i < 5; i++)
 					{
-						dishes.Add(new Dish(heading, DateHelper.MondayThisWeek().AddDays(i), Restaurant.Creme.Id));
+						dishes.Add(new Dish(description, DateHelper.MondayThisWeek().AddDays(i), Restaurant.Creme.Id));
 					}
+
+					recurringDish = string.Empty;
 				}
-				else
+				else if (!string.IsNullOrWhiteSpace(description))
 				{
-					dishes.Add(new Dish(heading, currentDate, Restaurant.Creme.Id));
+					if (areBelowWeekdays)
+					{
+						break;
+					}
+
+					dishes.Add(new Dish(description, date, Restaurant.Creme.Id));
 				}
+			}
+
+			if (date == DateHelper.MondayThisWeek().AddDays(-1))
+			{
+				dishes.Clear();
 			}
 
 			return dishes;
 		}
 
-		private DateTime ParseWeekDay(string text)
+		private bool StartsWithWeekDay(string[] dishes)
 		{
-			if (text.StartsWith("Måndag", StringComparison.OrdinalIgnoreCase))
+			if (!dishes.Any())
 			{
-				return DateHelper.MondayThisWeek();
+				return false;
 			}
 
-			if (text.StartsWith("Tisdag", StringComparison.OrdinalIgnoreCase))
-			{
-				return DateHelper.TuesdayThisWeek();
-			}
+			var firstLine = dishes[0].StripHtmlTags().ToLower();
+			firstLine = firstLine.TrimEnd(':');
 
-			if (text.StartsWith("Onsdag", StringComparison.OrdinalIgnoreCase))
-			{
-				return DateHelper.WednesdayThisWeek();
-			}
-
-			if (text.StartsWith("Torsdag", StringComparison.OrdinalIgnoreCase))
-			{
-				return DateHelper.ThursdayThisWeek();
-			}
-
-			if (text.StartsWith("Fredag", StringComparison.OrdinalIgnoreCase))
-			{
-				return DateHelper.FridayThisWeek();
-			}
-
-			if (text.StartsWith("Veckans pasta", StringComparison.OrdinalIgnoreCase) ||
-			    text.StartsWith("Veckans sallad", StringComparison.OrdinalIgnoreCase))
-			{
-				return EveryDayOfWeek;
-			}
-
-			return DateTime.MinValue;
+			return _weekDays.Contains(firstLine);
 		}
 	}
 }
