@@ -44,14 +44,14 @@ namespace LunchScraper.Core.Tests
 
 		private static string GetFullPath(string pdfFile)
 		{
-			string currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string currentDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
 			if (currentDirectory == null)
 			{
 				return string.Empty;
 			}
 
-			var testFile = Path.Combine(currentDirectory, pdfFile);
+			var testFile = System.IO.Path.Combine(currentDirectory, pdfFile);
 			return testFile;
 		}
 	}

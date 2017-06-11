@@ -31,13 +31,13 @@
 		{
 			<div class="tomorrow placeHolder"></div>
 		}
-		<h1><span class="logo"></span><span class="whiteFat">@day.Today</span></h1>
+		<h1><span id="knifeFork" class="logo"></span><span class="whiteFat">@day.Today</span></h1>
 	</header>
 
 	<div class="body-content" id="@String.Format("body{0}", day.Id)" style="display: @displayStyle">
 
-@foreach (var lunchMenu in Model.LunchMenus.OrderBy(lm => lm.Restaurant.Id).Where(lm => lm.Dishes.Any(d => d.Date.Date == currentDate.Date)))
-{
+	@foreach (var lunchMenu in Model.LunchMenus.OrderBy(lm => lm.Restaurant.Id).Where(lm => lm.Dishes.Any(d => d.Date.Date == currentDate.Date)))
+	{
 			<div class="menu">
 				<a href="@lunchMenu.Restaurant.Url" title="@lunchMenu.Restaurant.Name">@lunchMenu.Restaurant.Name</a>
 				<ul>
@@ -47,6 +47,21 @@
 					}
 				</ul>
 			</div>
-}
+	}
 	</div>
 }
+
+@section scripts {
+@{
+	var currentDay = Model.Days.FirstOrDefault(d => d.IsVisible);
+}
+	<script>
+		window.onerror = function(error) {
+			alert(error);
+		};
+
+		var currentDayId = @currentDay.Id;
+		detectSwipes();
+	</script>
+}
+
