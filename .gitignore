@@ -8,4 +8,5 @@ TestResults
 *.user
 *.pubxml.user
 ConnectionStrings.config
-.vs/
+.vs
+applicationhost.config

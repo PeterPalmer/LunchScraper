@@ -54,13 +54,16 @@ function handleTouchMove(evt) {
 	if (!xDown) return;
 
 	var xDiff = getSwipeDistanceX(evt.touches);
-	var offset = Math.min(Math.max(xDiff, -100), 100);
-	document.getElementById("header" + currentDayId).style.marginLeft = offset + "px";
+	var offset = Math.min(Math.max(xDiff, -300), 300);
+	//document.getElementById("header" + currentDayId).style.marginLeft = offset + "px";
+	document.getElementsByTagName("body")[0].style.marginLeft = offset + "px";
+	document.getElementsByTagName("body")[0].style.marginRight = (-1 * offset) + "px";
 }
 
 function handleTouchEnd(evt) {
-	document.getElementById("header" + currentDayId).style.marginLeft = "0";
-
+	//document.getElementById("header" + currentDayId).style.marginLeft = "0";
+	document.getElementsByTagName("body")[0].style.marginLeft = "0";
+	document.getElementsByTagName("body")[0].style.marginRight = "0";
 	var xDiff = getSwipeDistanceX(evt.changedTouches);
 	xDown = null;
 
