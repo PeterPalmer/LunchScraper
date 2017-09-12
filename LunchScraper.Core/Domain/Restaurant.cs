@@ -22,7 +22,7 @@ namespace LunchScraper.Core.Domain
 		public static Restaurant TennisHallen = new Restaurant(5, "Tennishallen", "https://www.sabis.se/kungl-tennishallen/dagens-lunch/");
 		public static Restaurant Aihaya = new Restaurant(6, "Aiyara", "http://gastrogate.com/restaurang/aiyara/page/3/");
 		public static Restaurant Creme = new Restaurant(7, "Crème", "http://cremegardet.kvartersmenyn.se/");
-		public static Restaurant KleinsRio = new Restaurant(8, "Kleins Rio", "http://kleinrio.kvartersmenyn.se/");
+		public static Restaurant KleinsRio = new Restaurant(8, "Kleins Rio", "http://kleinsrio.se/lunch/");
 
 		public static Restaurant GetById(int id)
 		{
