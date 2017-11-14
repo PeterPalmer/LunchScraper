@@ -23,23 +23,25 @@ namespace LunchScraper.Core.Domain
 		public static Restaurant Aihaya = new Restaurant(6, "Aiyara", "http://gastrogate.com/restaurang/aiyara/page/3/");
 		public static Restaurant Creme = new Restaurant(7, "Crème", "http://cremegardet.kvartersmenyn.se/");
 		public static Restaurant KleinsRio = new Restaurant(8, "Kleins Rio", "http://kleinsrio.se/lunch/");
+		public static Restaurant KalasetPåFyran = new Restaurant(9, "Kalaset på fyran", "http://www.kalaset.com/kalaset-pa-fyran/");
+
+		private static Dictionary<int, Restaurant> _restaurantById = new Dictionary<int, Restaurant>
+		{
+			{1, Länsrätten},
+			{2, Europa},
+			{3, PontusPåFyran},
+			{4, CafeTegeludden},
+			{5, TennisHallen},
+			{6, Aihaya},
+			{7, Creme },
+			{8, KleinsRio},
+			{9, KalasetPåFyran}
+		};
 
 		public static Restaurant GetById(int id)
 		{
-			var restaurantById = new Dictionary<int, Restaurant>
-			{
-				{1, Länsrätten},
-				{2, Europa},
-				{3, PontusPåFyran},
-				{4, CafeTegeludden},
-				{5, TennisHallen},
-				{6, Aihaya},
-				{7, Creme },
-				{8, KleinsRio}
-			};
-
 			Restaurant restaurant;
-			if (!restaurantById.TryGetValue(id, out restaurant))
+			if (!_restaurantById.TryGetValue(id, out restaurant))
 			{
 				return new Restaurant(-1, "Okänd restaurang", "");
 			}

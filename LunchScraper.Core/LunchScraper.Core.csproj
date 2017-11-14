@@ -82,6 +82,7 @@
     <Compile Include="MenuReaders\CremeFejanReader.cs" />
     <Compile Include="MenuReaders\CremeReader.cs" />
     <Compile Include="MenuReaders\EuropaReader.cs" />
+    <Compile Include="MenuReaders\KalasetPaFyranReader.cs" />
     <Compile Include="MenuReaders\KleinsRioReader.cs" />
     <Compile Include="MenuReaders\KvartersmenynReaderBase.cs" />
     <Compile Include="MenuReaders\PontusFyranReader.cs" />

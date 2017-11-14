@@ -45,9 +45,14 @@ function detectSwipes() {
 }
 
 var xDown = null;
+var yDown = null;
+var startTime;
+var elapsedTime;
 
 function handleTouchStart(evt) {
-	xDown = evt.touches[0].clientX;
+	xDown = evt.touches[0].pageX;
+	yDown = evt.touches[0].pageY;
+	startTime = new Date().getTime();
 }
 
 function handleTouchMove(evt) {
@@ -64,10 +69,20 @@ function handleTouchEnd(evt) {
 	//document.getElementById("header" + currentDayId).style.marginLeft = "0";
 	document.getElementsByTagName("body")[0].style.marginLeft = "0";
 	document.getElementsByTagName("body")[0].style.marginRight = "0";
-	var xDiff = getSwipeDistanceX(evt.changedTouches);
-	xDown = null;
 
-	if (Math.abs(xDiff) < 40) {
+	elapsedTime = new Date().getTime() - startTime;
+	if (elapsedTime <= 100) return;
+
+	var xDiff = getSwipeDistanceX(evt.changedTouches);
+	var yDiff = getSwipeDistanceY(evt.changedTouches);
+	xDown = null;
+	yDown = null;
+
+	if (Math.abs(yDiff) > 100) {
+		return;
+	}
+
+	if (Math.abs(xDiff) < 150) {
 		return;
 	}
 
@@ -83,7 +98,17 @@ function getSwipeDistanceX(touches) {
 		return 0;
 	}
 
-	var xUp = touches[0].clientX;
+	var xUp = touches[0].pageX;
 
 	return xUp - xDown;
+}
+
+function getSwipeDistanceY(touches) {
+	if (!yDown) {
+		return 0;
+	}
+
+	var yUp = touches[0].pageY;
+
+	return yUp - yDown;
 }

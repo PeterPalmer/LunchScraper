@@ -10,6 +10,9 @@ using Ninject;
 
 namespace LunchScraper.MenuReaderJob
 {
+	/// <summary>
+	/// Schedule: 1 1 * * * *
+	/// </summary>
 	public class Program
 	{
 		static void Main()
@@ -63,6 +66,15 @@ namespace LunchScraper.MenuReaderJob
 				catch (Exception ex)
 				{
 					Console.WriteLine("{0}.GetDishes failed!\r\n{1}", reader.GetType().Name, ex.Message);
+
+					Exception innerException = ex;
+					while(innerException.InnerException != null)
+					{
+						innerException = innerException.InnerException;
+					}
+
+					Console.WriteLine("{0}\r\n", innerException.Message);
+					Console.WriteLine("{0}\r\n", innerException.StackTrace);
 				}
 			});
 
