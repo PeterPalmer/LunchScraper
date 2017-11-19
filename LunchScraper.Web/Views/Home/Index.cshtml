@@ -13,7 +13,7 @@
 	<header id="@String.Format("header{0}", day.Id)" style="display: @displayStyle">
 		@if (day.ShowPrevioustDayLink)
 		{
-			<nav class="yesterday whiteFat"><a rel="prev" href="#" onclick='ShowDay(@previousId); return false;'>&laquo; @day.Yesterday</a></nav>
+			<nav class="yesterday whiteFat"><a rel="prev" href="#" onclick='ShowDay(@previousId, true); return false;'>&laquo; @day.Yesterday</a></nav>
 		}
 		else
 		{
@@ -21,7 +21,7 @@
 		}
 		@if (day.ShowNextDayLink)
 		{
-			<nav class="tomorrow whiteFat"><a rel="next" href="#" onclick='ShowDay(@nextId); return false;'>@day.Tomorrow &raquo;</a></nav>
+			<nav class="tomorrow whiteFat"><a rel="next" href="#" onclick='ShowDay(@nextId, false); return false;'>@day.Tomorrow &raquo;</a></nav>
 		}
 		else if (day.ShowApproxLink)
 		{
