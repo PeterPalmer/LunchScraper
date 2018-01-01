@@ -15,10 +15,15 @@ namespace LunchScraper.Core.MenuReaders
 		{
 		}
 
-		private static readonly HashSet<string> _weekDays = new HashSet<string>(new[]
+		private static readonly HashSet<string> _weekDays = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 		{
 			"måndag", "tisdag", "onsdag","torsdag","fredag"
-		});
+		};
+
+		private static readonly HashSet<string> _breakTags = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+		{
+			"Steak Frites 125:-", "Öppet: Mån – Fre 10:00 – 16:00", "pris 99.-"
+		};
 
 		public override List<Dish> ReadWeeklyMenu()
 		{
@@ -46,7 +51,7 @@ namespace LunchScraper.Core.MenuReaders
 					continue;
 				}
 
-				if (string.IsNullOrWhiteSpace(innerText) && currentDate == DateHelper.FridayThisWeek())
+				if ((string.IsNullOrWhiteSpace(innerText) || _breakTags.Contains(innerText)) && currentDate == DateHelper.FridayThisWeek())
 				{
 					break;
 				}
@@ -86,7 +91,7 @@ namespace LunchScraper.Core.MenuReaders
 
 		private bool StartsWithWeekDay(string text)
 		{
-			return _weekDays.Contains(GetFirstWord(text).ToLower());
+			return _weekDays.Contains(GetFirstWord(text));
 		}
 
 		private string GetFirstWord(string text)
