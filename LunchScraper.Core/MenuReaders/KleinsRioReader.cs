@@ -22,7 +22,7 @@ namespace LunchScraper.Core.MenuReaders
 
 		private static readonly HashSet<string> _breakTags = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 		{
-			"Steak Frites 125:-", "Öppet: Mån – Fre 10:00 – 16:00", "pris 99.-"
+			"Steak Frites 125:-", "Öppet: Mån – Fre 10:00 – 16:00", "pris 99.-", "Öppet: Mån – Fre 10.00 – 16.00. Frukost från 10.00. Lunch 11.00 – 14.00."
 		};
 
 		public override List<Dish> ReadWeeklyMenu()
@@ -32,7 +32,7 @@ namespace LunchScraper.Core.MenuReaders
 			var html = Scraper.ScrapeWebPage(Restaurant.KleinsRio.Url);
 			var cq = new CQ(html);
 
-			var htmlTags = cq["div.entry-content p strong, div.entry-content h3 strong"].ToList();
+			var htmlTags = cq["div.entry-content p strong, div.entry-content h3 strong, div.entry-content p"].ToList();
 
 			if (htmlTags == null || !htmlTags.Any())
 			{
@@ -51,7 +51,7 @@ namespace LunchScraper.Core.MenuReaders
 					continue;
 				}
 
-				if ((string.IsNullOrWhiteSpace(innerText) || _breakTags.Contains(innerText)) && currentDate == DateHelper.FridayThisWeek())
+				if ((string.IsNullOrWhiteSpace(innerText) && tag.NodeName.Equals("STRONG") || _breakTags.Contains(innerText)) && currentDate == DateHelper.FridayThisWeek())
 				{
 					break;
 				}
@@ -62,10 +62,7 @@ namespace LunchScraper.Core.MenuReaders
 				}
 			}
 
-			if (currentDate == DateHelper.MondayThisWeek().AddDays(-1))
-			{
-				dishes.Clear();
-			}
+			dishes.RemoveAll(d => d.Date == DateHelper.MondayThisWeek().AddDays(-1));
 
 			return dishes;
 		}
