@@ -66,5 +66,23 @@ namespace LunchScraper.Core.Tests.MenuReaders
 			Assert.AreEqual(3, dishes.Count(d => d.Date.DayOfWeek == DayOfWeek.Friday));
 		}
 
+		[TestMethod]
+		public void ReadWeeklyMenu_CanParseHtmlWeek11()
+		{
+			// Arrange
+			var scraper = TestHelper.MockWebScraper(@"TestInput\KleinsRioV11.htm");
+			var menuReader = new KleinsRioReader(scraper);
+
+			// Act
+			var dishes = menuReader.ReadWeeklyMenu();
+
+			// Assert
+			Assert.IsTrue(dishes.Any(d => d.Description == "Chili sin carne med nachochips, mangosalsa, syrad lök & ris." && d.Date.DayOfWeek == DayOfWeek.Monday));
+			Assert.IsTrue(dishes.Any(d => d.Description == "Rotfruktsgratäng med bön & spenatsallad" && d.Date.DayOfWeek == DayOfWeek.Tuesday));
+			Assert.IsTrue(dishes.Any(d => d.Description == "Pasta med pesto trapanese, pinjenötter, zucchini & berlottibönor." && d.Date.DayOfWeek == DayOfWeek.Wednesday));
+			Assert.IsTrue(dishes.Any(d => d.Description == "Örtbakad rotselleri med 67 graders ägg, havtorn & krämigt ris." && d.Date.DayOfWeek == DayOfWeek.Thursday));
+			Assert.IsTrue(dishes.Any(d => d.Description == "Bräckt isterband med mejramstuvad potatis & sallad på betor." && d.Date.DayOfWeek == DayOfWeek.Friday));
+			Assert.AreEqual(4, dishes.Count(d => d.Date.DayOfWeek == DayOfWeek.Friday));
+		}
 	}
 }

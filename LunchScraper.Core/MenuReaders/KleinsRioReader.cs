@@ -32,7 +32,7 @@ namespace LunchScraper.Core.MenuReaders
 			var html = Scraper.ScrapeWebPage(Restaurant.KleinsRio.Url);
 			var cq = new CQ(html);
 
-			var htmlTags = cq["div.entry-content p strong, div.entry-content h3 strong, div.entry-content p"].ToList();
+			var htmlTags = cq["div.entry-content p strong, div.entry-content p, div.entry-content h3 strong, div.entry-content h3"].ToList();
 
 			if (htmlTags == null || !htmlTags.Any())
 			{
@@ -59,6 +59,11 @@ namespace LunchScraper.Core.MenuReaders
 				if (!string.IsNullOrWhiteSpace(innerText))
 				{
 					dishes.Add(new Dish(innerText, currentDate, Restaurant.KleinsRio.Id));
+				}
+
+				if (innerText.Equals("Steak Frites 125:-", StringComparison.OrdinalIgnoreCase))
+				{
+					break;
 				}
 			}
 
