@@ -16,7 +16,7 @@ namespace LunchScraper.Core.Domain
 		}
 
 		public static Restaurant Länsrätten = new Restaurant(1, "Länsrätten", "https://www.sabis.se/lansforsakringar/dagens-lunch/");
-		public static Restaurant Europa = new Restaurant(2, "Europa", "https://www.sabis.se/europa/dagens-lunch/");
+		public static Restaurant Europa = new Restaurant(2, "Bistro Mörner", "https://www.sabis.se/bistro-morner/dagens-lunch/");
 		public static Restaurant PontusPåFyran = new Restaurant(3, "Pontus på Fyran", "http://pontusfrithiof.com/pontus/pontus-pa-fyran/");
 		public static Restaurant CafeTegeludden = new Restaurant(4, "Café Tegeludden", "http://cafetegeludden.kvartersmenyn.se/");
 		public static Restaurant TennisHallen = new Restaurant(5, "Tennishallen", "https://www.sabis.se/kungl-tennishallen/dagens-lunch/");

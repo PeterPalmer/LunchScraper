@@ -32,6 +32,13 @@ namespace LunchScraper.Controllers
 			return View(model);
 		}
 
+		public ActionResult Refresh()
+		{
+			MenusModel model = RetrieveMenus();
+
+			return View("Index", model);
+		}
+
 		public ActionResult Approx()
 		{
 			var markovChains = this.GetMarkovChains();

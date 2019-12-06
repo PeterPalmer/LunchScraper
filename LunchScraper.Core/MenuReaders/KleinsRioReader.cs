@@ -22,7 +22,9 @@ namespace LunchScraper.Core.MenuReaders
 
 		private static readonly HashSet<string> _breakTags = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 		{
-			"Steak Frites 125:-", "Öppet: Mån – Fre 10:00 – 16:00", "pris 99.-", "Öppet: Mån – Fre 10.00 – 16.00. Frukost från 10.00. Lunch 11.00 – 14.00."
+			"Steak Frites 125:-", "Öppet: Mån – Fre 10:00 – 16:00", "pris 99.-",
+			"Öppet: Mån – Fre 10.00 – 16.00. Frukost från 10.00. Lunch 11.00 – 14.00.",
+			"Öppettider: måndag-fredag 10.00-15.00. Lunchen serveras mellan 11.00-14.00"
 		};
 
 		public override List<Dish> ReadWeeklyMenu()

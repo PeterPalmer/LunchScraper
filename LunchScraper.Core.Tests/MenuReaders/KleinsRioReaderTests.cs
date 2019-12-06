@@ -84,5 +84,19 @@ namespace LunchScraper.Core.Tests.MenuReaders
 			Assert.IsTrue(dishes.Any(d => d.Description == "Bräckt isterband med mejramstuvad potatis & sallad på betor." && d.Date.DayOfWeek == DayOfWeek.Friday));
 			Assert.AreEqual(4, dishes.Count(d => d.Date.DayOfWeek == DayOfWeek.Friday));
 		}
+
+		[TestMethod]
+		public void ReadWeeklyMenu_CanParseHtmlWeek49()
+		{
+			// Arrange
+			var scraper = TestHelper.MockWebScraper(@"TestInput\KleinsRioV49.htm");
+			var menuReader = new KleinsRioReader(scraper);
+
+			// Act
+			var dishes = menuReader.ReadWeeklyMenu();
+
+			// Assert
+			Assert.IsTrue(dishes.Any(d => d.Description == "Palak paneer med halloumi, spenat, ris och koriander" && d.Date.DayOfWeek == DayOfWeek.Monday));
+		}
 	}
 }

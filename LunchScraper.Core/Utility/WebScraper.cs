@@ -25,8 +25,11 @@ namespace LunchScraper.Core.Utility
 		{
 			try
 			{
+				ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
 				//create request
 				var request = (HttpWebRequest) WebRequest.Create(url);
+
 				request.Pipelined = true;
 				request.KeepAlive = true;
 				request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");
@@ -63,7 +66,7 @@ namespace LunchScraper.Core.Utility
 				var failedResponse = ex.Response as HttpWebResponse;
 				if (failedResponse != null)
 				{
-					Debug.WriteLine("[WebScraper] Failed with status code: {0} {1}", failedResponse.StatusCode, (int)failedResponse.StatusCode);
+					Console.WriteLine("[WebScraper] {0} Failed with status code: {1} {2}", url, failedResponse.StatusCode, (int)failedResponse.StatusCode);
 				}
 
 				return Retry(url, retryAttempt);
